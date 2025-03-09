@@ -11,12 +11,7 @@ void logSDLError(std::ostream& os, const std::string &msg, bool fatal = false);
 void initSDL(SDL_Window* &window, SDL_Renderer* &renderer);
 void quitSDL(SDL_Window* window, SDL_Renderer* renderer);
 void waitUntilKeyPressed();
-/*SDL_Texture* loadTexture(string path, SDL_Renderer * renderer)
-{
-    SDL_Texture* newTexture = IMG_LoadTexture(renderer, path.c_str());
-    SDL_DestroyTexture(newTexture);
-    return newTexture;
-}*/
+
 int main(int argc, char* argv[])
 {
     SDL_Window* window;
@@ -44,10 +39,6 @@ int main(int argc, char* argv[])
     SDL_RenderFillRect(renderer, &filled_rect);
 
     SDL_RenderPresent(renderer);
-
-    /*SDL_Texture* background = loadTexture("degt25.jpg", renderer);
-    SDL_RenderCopy(renderer, background, NULL, NULL);
-    SDL_RenderPresent(renderer);*/
 
     waitUntilKeyPressed();
     quitSDL(window, renderer);
