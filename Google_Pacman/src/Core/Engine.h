@@ -28,7 +28,9 @@ class Engine
         }
 
         bool init();
-        void render();
+        void render(SDL_Renderer* &renderer);
+        void handleEvent(SDL_Event &e);
+        void run();
 };
 
 #endif // ENGINE_H

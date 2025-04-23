@@ -33,10 +33,32 @@ bool Engine::init()
     return true;
 }
 
-void Engine::render()
+void Engine::handleEvent(SDL_Event &e)
 {
-    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 0);
+    if (e.type == SDL_QUIT)
+    {
+        isRunning = false;
+    }
+}
+
+void Engine::render(SDL_Renderer* &renderer)
+{
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
     SDL_RenderPresent(renderer);
+}
+
+void Engine::run()
+{
+    SDL_Event event;
+    while (isRunning)
+    {
+
+        while (SDL_PollEvent(&event))
+        {
+            handleEvent(event);
+        }
+        render(renderer);
+    }
 }
