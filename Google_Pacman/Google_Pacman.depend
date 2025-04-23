@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1745418407 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\main.cpp
+	<iostream>
+
+1745418178 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\engine.cpp
+	"Engine.h"
+
+1745418513 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\engine.h
+	<SDL.h>
+	<SDL_image.h>
+
