@@ -1,9 +1,11 @@
-#include <iostream>
+#include "Engine.h"
 
 using namespace std;
 
-int main()
+int main(int argc, char* argv[])
 {
-    cout << "Hello world!" << endl;
+    Engine engine;
+    if(!engine.init())return -1;
+    engine.render();
     return 0;
 }
