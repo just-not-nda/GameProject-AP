@@ -29,7 +29,7 @@ bool Engine::init()
         return false;
     }
 
-    isRunning = true;
+    is_running = true;
     return true;
 }
 
@@ -37,7 +37,7 @@ void Engine::handleEvent(SDL_Event &e)
 {
     if (e.type == SDL_QUIT)
     {
-        isRunning = false;
+        is_running = false;
     }
 }
 
@@ -52,7 +52,7 @@ void Engine::render(SDL_Renderer* &renderer)
 void Engine::run()
 {
     SDL_Event event;
-    while (isRunning)
+    while (is_running)
     {
 
         while (SDL_PollEvent(&event))

@@ -1,11 +1,11 @@
 #include "Map.h"
 
-bool firstLoadMap;
-int orgMap[17][58];
+bool first_load_map;
+int mapData[17][58];
 
 Map::Map()
 {
-    if (firstLoadMap)
+    if (first_load_map)
     {
         ifstream file(MAP_FILE);
         if (file) {
@@ -13,16 +13,16 @@ Map::Map()
             {
                 for (int col = 0; col < MAP_WIDTH; col++)
                 {
-                    file >> orgMap[row][col];
-                    if(orgMap[row][col] < 0 || orgMap[row][col] > 48)
+                    file >> mapData[row][col];
+                    if(mapData[row][col] < 0 || mapData[row][col] > 48)
                     {
-                        cout << "Wrong Tile at (" << row << ", " << col << "): " << orgMap[row][col] << endl;
+                        cout << "Wrong Tile at (" << row << ", " << col << "): " << mapData[row][col] << endl;
                         return;
                     }
                 }
             }
             cout << "Map read successfully!" << endl;
-            firstLoadMap = false;
+            first_load_map = false;
         }
         else
         {
@@ -35,7 +35,7 @@ Map::Map()
     {
         for(int col = 0; col < MAP_WIDTH; ++col)
         {
-            tile[row][col] = orgMap[row][col];
+            tile[row][col] = mapData[row][col];
         }
     }
 }

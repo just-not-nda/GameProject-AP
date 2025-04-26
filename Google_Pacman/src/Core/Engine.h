@@ -9,7 +9,7 @@ class Engine
     private:
     SDL_Window* window;
     SDL_Renderer* renderer;
-    bool isRunning;
+    bool is_running;
 
     protected:
 
