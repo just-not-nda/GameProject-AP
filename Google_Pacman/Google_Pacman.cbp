@@ -16,6 +16,7 @@
 					<Add directory="src/Core" />
 					<Add directory="src/Map" />
 					<Add directory="src/Character" />
+					<Add directory="src/Setup" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -28,6 +29,7 @@
 					<Add directory="src/Core" />
 					<Add directory="src/Map" />
 					<Add directory="src/Character" />
+					<Add directory="src/Setup" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -45,6 +47,9 @@
 		<Unit filename="src/Core/Engine.h" />
 		<Unit filename="src/Map/Map.cpp" />
 		<Unit filename="src/Map/Map.h" />
+		<Unit filename="src/Setup/GetError.h" />
+		<Unit filename="src/Setup/Texture.cpp" />
+		<Unit filename="src/Setup/Texture.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
