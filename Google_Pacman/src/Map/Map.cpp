@@ -16,17 +16,17 @@ Map::Map()
                     file >> mapData[row][col];
                     if(mapData[row][col] < 0 || mapData[row][col] > 48)
                     {
-                        cout << "Wrong Tile at (" << row << ", " << col << "): " << mapData[row][col] << endl;
+                        Check->Status("Wrong Tile");
                         return;
                     }
                 }
             }
-            cout << "Map read successfully!" << endl;
+            Check->Status("Map read successfully!");
             first_load_map = false;
         }
         else
         {
-            cout << "Error reading file!" << endl;
+            Check->Status("Error reading file!");
             return;
         }
     }

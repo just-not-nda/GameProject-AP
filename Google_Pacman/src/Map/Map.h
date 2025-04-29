@@ -4,11 +4,14 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
-using namespace std;
+
+#include "GetError.h"
 
 class Map
 {
     private:
+        GetError* Check = new GetError("Map");
+
         static const int MAP_WIDTH = 58;
         static const int MAP_HEIGHT = 17;
         const string MAP_FILE = "src/Map/MAP.txt";
