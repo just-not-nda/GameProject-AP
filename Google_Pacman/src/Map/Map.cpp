@@ -40,3 +40,6 @@ Map::Map()
     }
 }
 
+int Map::getTileID(int x, int y) {
+    return tile[y][x];
+}

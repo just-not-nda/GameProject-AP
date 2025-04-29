@@ -22,6 +22,7 @@ class Map
         Map();
         ~Map(){}
 
+        int getTileID(int x, int y);
 
 };
 
