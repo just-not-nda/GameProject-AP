@@ -6,9 +6,10 @@
 	"Engine.h"
 	<iostream>
 
-1745639113 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\engine.h
+1745944289 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\engine.h
 	<SDL.h>
 	<SDL_image.h>
+	"Texture.h"
 
 1745639550 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\map\map.cpp
 	"Map.h"
@@ -22,4 +23,13 @@
 	"Character.h"
 
 1745640198 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\character.h
+
+1745944289 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\texture.h
+	<SDL.h>
+	<SDL_image.h>
+	"../Setup/GetError.h"
+
+1745943253 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\geterror.h
+	<iostream>
+	<string>
 
