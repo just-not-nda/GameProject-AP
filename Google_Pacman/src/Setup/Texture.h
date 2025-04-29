@@ -4,13 +4,13 @@
 
 class Texture
 {
+    private:
+
     public:
         Texture();
-        virtual ~Texture();
+        ~Texture();
 
-    protected:
 
-    private:
 };
 
 #endif // TEXTURE_H
