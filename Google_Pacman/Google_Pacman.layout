@@ -7,14 +7,29 @@
 			<Cursor1 position="175" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\Setup\GetError.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\Setup\Texture.h" open="1" top="1" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="408" topLine="0" />
+			<Cursor1 position="466" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\Setup\Texture.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\Core\Engine.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="657" topLine="1" />
+			<Cursor1 position="630" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\Core\Engine.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1924" topLine="49" />
+		</Cursor>
+	</File>
+	<File name="src\Map\Map.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="46" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\Setup\Texture.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="476" topLine="15" />
 		</Cursor>
 	</File>
 	<File name="src\Map\Map.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -22,29 +37,14 @@
 			<Cursor1 position="468" topLine="0" />
 		</Cursor>
 	</File>
+	<File name="src\Setup\GetError.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="408" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="src\Character\Character.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="63" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\Map\Map.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1069" topLine="16" />
-		</Cursor>
-	</File>
-	<File name="src\Core\Engine.h" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="630" topLine="15" />
-		</Cursor>
-	</File>
-	<File name="src\Setup\Texture.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1016" topLine="15" />
-		</Cursor>
-	</File>
-	<File name="src\Core\Engine.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1274" topLine="31" />
 		</Cursor>
 	</File>
 	<File name="src\Character\Character.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
