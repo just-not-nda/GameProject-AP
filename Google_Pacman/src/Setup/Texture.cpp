@@ -10,7 +10,7 @@ Texture::~Texture() {
 
 }
 
-void Texture::loadTileTexture(SDL_Renderer* &renderer) {
+void Texture::loadTile(SDL_Renderer* &renderer) {
     SDL_Surface* Image = IMG_Load("assets/Pacman Google Map Tile.png");
 
     if (Image == nullptr)
@@ -39,6 +39,6 @@ void Texture::loadTileTexture(SDL_Renderer* &renderer) {
 }
 
 
-void Texture::renderTileTexture(SDL_Renderer* &renderer, int tileID, SDL_Rect* tileRect) {
+void Texture::renderTile(SDL_Renderer* &renderer, int tileID, SDL_Rect* tileRect) {
     SDL_RenderCopy(renderer, tileTexture, &tileSprite[tileID], tileRect);
 }

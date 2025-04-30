@@ -14,25 +14,25 @@ bool Engine::init()
                                930, 275 + 100 * 2, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE); // MAP_REAL_SIZE = 930 x 275
 
     if (!window) {
-        std::cout << "Ko tao dc cua so: " << SDL_GetError() << std::endl;
+        cout << "Ko tao dc cua so: " << SDL_GetError() << endl;
         return false;
     }
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) {
-        std::cout << "Ko tao dc renderer: " << SDL_GetError() << std::endl;
+        cout << "Ko tao dc renderer: " << SDL_GetError() << endl;
         return false;
     }
 
     if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
-        std::cout << "SDL_image ko khoi tao dc: " << IMG_GetError() << std::endl;
+        cout << "SDL_image ko khoi tao dc: " << IMG_GetError() << endl;
         return false;
     }
 
     _map = new Map();
 
     texture = new Texture();
-    texture->loadTileTexture(renderer);
+    texture->loadTile(renderer);
 
     is_running = true;
     return true;
@@ -56,7 +56,7 @@ void Engine::render(SDL_Renderer* &renderer)
         for (int col = 0; col < 58; ++col) {
             mapRect = { col * 16, row * 16 + 100, 16, 16 };
             int tileID = _map->getTileID(col, row);
-            texture->renderTileTexture(renderer, tileID, &mapRect);
+            texture->renderTile(renderer, tileID, &mapRect);
         }
     }
 

@@ -23,8 +23,8 @@ class Texture
         Texture();
         ~Texture();
 
-        void loadTileTexture(SDL_Renderer* &renderer);
-        void renderTileTexture(SDL_Renderer* &renderer, int tileID, SDL_Rect* tileRect);
+        void loadTile(SDL_Renderer* &renderer);
+        void renderTile(SDL_Renderer* &renderer, int tileID, SDL_Rect* tileRect);
 };
 
 #endif // TEXTURE_H
