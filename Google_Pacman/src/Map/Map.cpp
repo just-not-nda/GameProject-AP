@@ -1,6 +1,6 @@
 #include "Map.h"
 
-bool first_load_map;
+bool first_load_map = true;
 int mapData[17][58];
 
 Map::Map()

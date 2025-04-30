@@ -29,6 +29,11 @@ bool Engine::init()
         return false;
     }
 
+    _map = new Map();
+
+    texture = new Texture();
+    texture->loadTileTexture(renderer);
+
     is_running = true;
     return true;
 }
@@ -45,6 +50,15 @@ void Engine::render(SDL_Renderer* &renderer)
 {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
+
+    SDL_Rect mapRect;
+    for (int row = 0; row < 17; ++row) {
+        for (int col = 0; col < 58; ++col) {
+            mapRect = { col * 16, row * 16 + 100, 16, 16 };
+            int tileID = _map->getTileID(col, row);
+            texture->renderTileTexture(renderer, tileID, &mapRect);
+        }
+    }
 
     SDL_RenderPresent(renderer);
 }
