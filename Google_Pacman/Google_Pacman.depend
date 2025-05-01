@@ -24,7 +24,7 @@
 1745640235 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\character.cpp
 	"Character.h"
 
-1745640198 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\character.h
+1746117531 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\character.h
 
 1746030756 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\texture.h
 	<SDL.h>
@@ -37,4 +37,10 @@
 
 1746030756 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\texture.cpp
 	"Texture.h"
+
+1746117593 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\pacman.cpp
+	"Pacman.h"
+
+1746117586 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\pacman.h
+	"Character.h"
 

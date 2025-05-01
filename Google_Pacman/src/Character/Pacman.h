@@ -1,16 +1,15 @@
 #ifndef PACMAN_H
 #define PACMAN_H
 
+#include "Character.h"
 
-class Pacman
+class Pacman : public Character
 {
     public:
         Pacman();
-        virtual ~Pacman();
+        ~Pacman();
 
-    protected:
 
-    private:
 };
 
 #endif // PACMAN_H

@@ -28,6 +28,8 @@ class Character
         int getTileX() const;
         int getTileY() const;
 
+
+        void teleport();
 };
 
 #endif // CHARACTER_H
