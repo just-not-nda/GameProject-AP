@@ -43,6 +43,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Character/Character.cpp" />
 		<Unit filename="src/Character/Character.h" />
+		<Unit filename="src/Character/Pacman.cpp" />
+		<Unit filename="src/Character/Pacman.h" />
 		<Unit filename="src/Core/Engine.cpp" />
 		<Unit filename="src/Core/Engine.h" />
 		<Unit filename="src/Map/Map.cpp" />
