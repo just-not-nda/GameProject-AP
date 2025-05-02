@@ -11,7 +11,7 @@ Texture::~Texture() {
 }
 
 void Texture::loadTile(SDL_Renderer* &renderer) {
-    SDL_Surface* Image = IMG_Load("assets/Pacman Google Map Tile.png");
+    SDL_Surface* Image = IMG_Load("assets/Map Tile.png");
 
     if (Image == nullptr)
     {
