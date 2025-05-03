@@ -21,12 +21,12 @@ Map::Map()
                     }
                 }
             }
-            Check->Status("Map read successfully!");
+            Check->Status("Map is OK");
             first_load_map = false;
         }
         else
         {
-            Check->Status("Error reading file!");
+            Check->Status("Error reading file");
             return;
         }
     }

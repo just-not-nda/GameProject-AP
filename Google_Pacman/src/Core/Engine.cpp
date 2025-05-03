@@ -33,6 +33,7 @@ bool Engine::init()
 
     texture = new Texture();
     texture->loadTile(renderer);
+    texture->loadCharacterTextures(renderer);
 
     is_running = true;
     return true;
@@ -60,6 +61,7 @@ void Engine::render(SDL_Renderer* &renderer)
         }
     }
 
+    texture->renderPacman(renderer, 35, 15, 1);
     SDL_RenderPresent(renderer);
 }
 

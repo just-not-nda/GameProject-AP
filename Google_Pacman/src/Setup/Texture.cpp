@@ -39,7 +39,7 @@ void Texture::loadTile(SDL_Renderer* &renderer) {
                 ++tileID;
             }
         }
-        Check->Status("Tile Texture got successfully!");
+        Check->Status("Tile Texture is OK");
     }
 
     SDL_FreeSurface(img);
@@ -51,7 +51,7 @@ void Texture::renderTile(SDL_Renderer* &renderer, int tileID, SDL_Rect* tileRect
 }
 
 void Texture::loadCharacterTextures(SDL_Renderer* &renderer) {
-    SDL_Surface* img = IMG_Load("assets/Pacman and Ghost Texture 1.png");
+    SDL_Surface* img = IMG_Load("assets/Character Texture.png");
     if (img == nullptr) {
         Check->Status( IMG_GetError() );
     }
@@ -67,7 +67,7 @@ void Texture::loadCharacterTextures(SDL_Renderer* &renderer) {
         x = 0;
         for (int i = 0; i < 11; ++i) pacmanDEAD[i] = {x, 155, 30, 30}, x += 31;
 
-        Check->Status("Pacman Texture got successfully!");
+        Check->Status("Pacman Texture is OK");
 
         x = 0; y = 31;
         for (int i = 0; i < TOTAL_GHOST - 1; ++i) {
@@ -95,11 +95,11 @@ void Texture::loadCharacterTextures(SDL_Renderer* &renderer) {
         ghost[GHOST_SPIRIT][RIGHT][0] = {x, y, 30, 30};
         ghost[GHOST_SPIRIT][RIGHT][1] = {x, y, 30, 30}; x = y = 0;
 
-        SDL_FreeSurface(img);
+        /*SDL_FreeSurface(img);
         img = IMG_Load("assets/ghostscore 1.png");
-        ghostScore = SDL_CreateTextureFromSurface(renderer, img);
+        ghostScore = SDL_CreateTextureFromSurface(renderer, img);*/
 
-        Check->Status("Ghost Texture got successfully!");
+        Check->Status("Ghost Texture is OK");
     }
     SDL_FreeSurface(img);
     img = nullptr;
