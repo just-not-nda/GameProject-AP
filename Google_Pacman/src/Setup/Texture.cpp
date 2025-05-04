@@ -95,9 +95,9 @@ void Texture::loadCharacterTextures(SDL_Renderer* &renderer) {
         ghost[GHOST_SPIRIT][RIGHT][0] = {x, y, 30, 30};
         ghost[GHOST_SPIRIT][RIGHT][1] = {x, y, 30, 30}; x = y = 0;
 
-        /*SDL_FreeSurface(img);
-        img = IMG_Load("assets/ghostscore 1.png");
-        ghostScore = SDL_CreateTextureFromSurface(renderer, img);*/
+        SDL_FreeSurface(img);
+        img = IMG_Load("assets/Ghost Score.png");
+        ghostScore = SDL_CreateTextureFromSurface(renderer, img);
 
         Check->Status("Ghost Texture is OK");
     }
