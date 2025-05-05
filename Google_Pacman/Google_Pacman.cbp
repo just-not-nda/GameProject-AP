@@ -43,13 +43,21 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Character/Character.cpp" />
 		<Unit filename="src/Character/Character.h" />
+		<Unit filename="src/Character/Ghost.cpp" />
+		<Unit filename="src/Character/Ghost.h" />
 		<Unit filename="src/Character/Pacman.cpp" />
 		<Unit filename="src/Character/Pacman.h" />
 		<Unit filename="src/Core/Engine.cpp" />
 		<Unit filename="src/Core/Engine.h" />
 		<Unit filename="src/Map/Map.cpp" />
 		<Unit filename="src/Map/Map.h" />
+		<Unit filename="src/Setup/Audio.cpp" />
+		<Unit filename="src/Setup/Audio.h" />
 		<Unit filename="src/Setup/GetError.h" />
+		<Unit filename="src/Setup/Manager.cpp" />
+		<Unit filename="src/Setup/Manager.h" />
+		<Unit filename="src/Setup/Text.cpp" />
+		<Unit filename="src/Setup/Text.h" />
 		<Unit filename="src/Setup/Texture.cpp" />
 		<Unit filename="src/Setup/Texture.h" />
 		<Extensions>
