@@ -17,6 +17,7 @@
 					<Add directory="src/Map" />
 					<Add directory="src/Character" />
 					<Add directory="src/Setup" />
+					<Add directory="src/Menu" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -30,6 +31,7 @@
 					<Add directory="src/Map" />
 					<Add directory="src/Character" />
 					<Add directory="src/Setup" />
+					<Add directory="src/Menu" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -49,17 +51,24 @@
 		<Unit filename="src/Character/Pacman.h" />
 		<Unit filename="src/Core/Engine.cpp" />
 		<Unit filename="src/Core/Engine.h" />
+		<Unit filename="src/Core/GameCore.cpp" />
+		<Unit filename="src/Core/GameCore.h" />
+		<Unit filename="src/Core/GameManager.cpp" />
+		<Unit filename="src/Core/GameManager.h" />
+		<Unit filename="src/Core/GameState.cpp" />
+		<Unit filename="src/Core/GameState.h" />
 		<Unit filename="src/Map/Map.cpp" />
 		<Unit filename="src/Map/Map.h" />
-		<Unit filename="src/Setup/Audio.cpp" />
-		<Unit filename="src/Setup/Audio.h" />
+		<Unit filename="src/Menu/Menu" />
+		<Unit filename="src/Setup/AudioManager.cpp" />
+		<Unit filename="src/Setup/AudioManager.h" />
 		<Unit filename="src/Setup/GetError.h" />
-		<Unit filename="src/Setup/Manager.cpp" />
-		<Unit filename="src/Setup/Manager.h" />
-		<Unit filename="src/Setup/Text.cpp" />
-		<Unit filename="src/Setup/Text.h" />
+		<Unit filename="src/Setup/TextManager.cpp" />
+		<Unit filename="src/Setup/TextManager.h" />
 		<Unit filename="src/Setup/Texture.cpp" />
 		<Unit filename="src/Setup/Texture.h" />
+		<Unit filename="src/Setup/TimeManager.cpp" />
+		<Unit filename="src/Setup/TimeManager.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
