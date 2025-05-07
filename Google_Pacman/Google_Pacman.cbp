@@ -59,7 +59,10 @@
 		<Unit filename="src/Core/GameState.h" />
 		<Unit filename="src/Map/Map.cpp" />
 		<Unit filename="src/Map/Map.h" />
-		<Unit filename="src/Menu/Menu" />
+		<Unit filename="src/Menu/Button.cpp" />
+		<Unit filename="src/Menu/Button.h" />
+		<Unit filename="src/Menu/Menu.cpp" />
+		<Unit filename="src/Menu/Menu.h" />
 		<Unit filename="src/Setup/AudioManager.cpp" />
 		<Unit filename="src/Setup/AudioManager.h" />
 		<Unit filename="src/Setup/GetError.h" />
