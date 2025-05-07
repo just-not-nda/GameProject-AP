@@ -22,7 +22,7 @@ class Map
         int tile[MAP_HEIGHT][MAP_WIDTH];
         int dist[MAP_WIDTH * MAP_HEIGHT][MAP_WIDTH * MAP_HEIGHT][4];
         pair<int, int> nextCrossID[MAP_HEIGHT][MAP_WIDTH][4];
-        bool markCross[MAP_HEIGHT][MAP_WIDTH][4];
+        bool validTurnDir[MAP_HEIGHT][MAP_WIDTH][4];
 
         void findingCrossRoad();
         void calculateDistance();

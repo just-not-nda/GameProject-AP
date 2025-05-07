@@ -3,7 +3,7 @@
 
 bool first_load_map = true;
 int mapData[17][58];
-int color[17][58];
+int bfsVisitMark[17][58];
 
 typedef std::pair<int, int> II;
 
@@ -66,21 +66,21 @@ bool Map::isWall(pair<int, int> tileID) {
 
 bool Map::iscrossRoad(int x, int y) {
     int cnt = 0;
-    if (markCross[y][x][UP]) ++cnt;
-    if (markCross[y][x][RIGHT]) ++cnt;
-    if (markCross[y][x][DOWN]) ++cnt;
-    if (markCross[y][x][LEFT]) ++cnt;
+    if (validTurnDir[y][x][UP]) ++cnt;
+    if (validTurnDir[y][x][RIGHT]) ++cnt;
+    if (validTurnDir[y][x][DOWN]) ++cnt;
+    if (validTurnDir[y][x][LEFT]) ++cnt;
     if (cnt >= 3) return true;
     if (cnt == 2) {
-        if (markCross[y][x][UP] && markCross[y][x][DOWN]) return false;
-        if (markCross[y][x][LEFT] && markCross[y][x][RIGHT]) return false;
+        if (validTurnDir[y][x][UP] && validTurnDir[y][x][DOWN]) return false;
+        if (validTurnDir[y][x][LEFT] && validTurnDir[y][x][RIGHT]) return false;
         return true;
     }
     return false;
 }
 
 bool Map::canChangeDir(int x, int y, int newDir) {
-    return markCross[y][x][newDir];
+    return validTurnDir[y][x][newDir];
 }
 
 bool Map::besideCrossIsWall(pair<int, int> Cross, int newDir) {
@@ -94,14 +94,14 @@ bool Map::besideCrossIsWall(pair<int, int> Cross, int newDir) {
 void Map::findingCrossRoad() {
     for (int x = 0; x < MAP_WIDTH; ++x) {
         for (int y = 0; y < MAP_HEIGHT; ++y) {
-            for (int dir = 0; dir < 4; ++dir) markCross[y][x][dir] = false;
+            for (int dir = 0; dir < 4; ++dir) validTurnDir[y][x][dir] = false;
 
             if (tile[y][x] != 42 && tile[y][x] != 30 && tile[y][x] != 31) continue;
 
-            if (y > 0  && (tile[y - 1][x] == 42 || tile[y - 1][x] == 30 || tile[y - 1][x] == 31)) markCross[y][x][0] = true;
-            if (y < MAP_HEIGHT - 1 && (tile[y + 1][x] == 42 || tile[y + 1][x] == 30 || tile[y + 1][x] == 31)) markCross[y][x][2] = true;
-            if (x > 0  && (tile[y][x - 1] == 42 || tile[y][x - 1] == 30 || tile[y][x - 1] == 31)) markCross[y][x][3] = true;
-            if (x < MAP_WIDTH - 1 && (tile[y][x + 1] == 42 || tile[y][x + 1] == 30 || tile[y][x + 1] == 31)) markCross[y][x][1] = true;
+            if (y > 0  && (tile[y - 1][x] == 42 || tile[y - 1][x] == 30 || tile[y - 1][x] == 31)) validTurnDir[y][x][0] = true;
+            if (y < MAP_HEIGHT - 1 && (tile[y + 1][x] == 42 || tile[y + 1][x] == 30 || tile[y + 1][x] == 31)) validTurnDir[y][x][2] = true;
+            if (x > 0  && (tile[y][x - 1] == 42 || tile[y][x - 1] == 30 || tile[y][x - 1] == 31)) validTurnDir[y][x][3] = true;
+            if (x < MAP_WIDTH - 1 && (tile[y][x + 1] == 42 || tile[y][x + 1] == 30 || tile[y][x + 1] == 31)) validTurnDir[y][x][1] = true;
         }
     }
 }
@@ -174,7 +174,7 @@ void Map::calculateDistance() {
                 if (isWall(pair<int, int> (xn, yn))) continue;
                 for (int i = 0; i < MAP_HEIGHT * MAP_WIDTH; ++i) dis[i] = -1;
                 ++id;
-                color[yn][xn] = id;
+                bfsVisitMark[yn][xn] = id;
                 dis[xn * MAP_HEIGHT + yn] = 0;
                 visitNode.push(pair<int, int> (yn * MAP_WIDTH + xn, startDir));
                 while (!visitNode.empty()) {
@@ -187,8 +187,8 @@ void Map::calculateDistance() {
                         int u = curx + dh[dir], v = cury + dc[dir];
                         if (lasDir % 2 == dir % 2 && dir != lasDir) continue;
                         if (isWall(std::pair<int, int> (u, v))) continue;
-                        if (color[v][u] != id) {
-                            color[v][u] = id;
+                        if (bfsVisitMark[v][u] != id) {
+                            bfsVisitMark[v][u] = id;
                             dis[u * MAP_HEIGHT + v] = dis[curx * MAP_HEIGHT + cury] + 1;
                             visitNode.push(std::pair<int, int> (v * MAP_WIDTH + u, dir));
                         }
