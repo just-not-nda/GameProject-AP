@@ -7,7 +7,7 @@
 #include <stack>
 using namespace std;
 
-typedef std::pair<const int, double> CID;
+typedef pair<const int, double> CID;
 
 class TimeManager {
     private:
@@ -20,13 +20,11 @@ class TimeManager {
 
         int lastStatus;
         bool pause;
-        double FRIGHTEN_TIME = 5.0;
-        double SCATTERING_TIME = 7.0;
+        double FRIGHTEN_TIME = 10.0;
+        double SCATTERING_TIME = 8.0;
         double CHASING_TIME = 20.0;
     public:
         const int FPS = 60;
-        const double FRIENDY_CHASE_TIME = 3.0;
-        const double GREENDY_CHASE_TIME = 2.0;
         const int FRIGHTEN_MODE = 0;
         const int SCATTERING_MODE = 1;
         const int CHASING_MODE = 2;

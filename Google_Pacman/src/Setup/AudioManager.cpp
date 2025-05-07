@@ -1,7 +1,6 @@
-#include "SoundManager.h"
+#include "AudioManager.h"
 
-
-SoundManager::SoundManager()
+AudioManager::AudioManager()
 {
     for (int i = 0; i < 11; ++i)
         soundEffect[i] = nullptr;
@@ -13,7 +12,7 @@ SoundManager::SoundManager()
     dead = false;
 }
 
-SoundManager::~SoundManager()
+AudioManager::~AudioManager()
 {
     for (int i = 0; i < 11; ++i) {
         Mix_FreeChunk(soundEffect[i]);
@@ -21,7 +20,7 @@ SoundManager::~SoundManager()
     }
 }
 
-void SoundManager::insertPlayList(const int soundID)
+void AudioManager::insertPlayList(const int soundID)
 {
     if (soundID == EAT_DOT) eatDotTime = 16;
     else if (soundID == EAT_GHOST) Mix_PlayChannel(4, soundEffect[EAT_GHOST], 0);
@@ -51,7 +50,7 @@ void SoundManager::insertPlayList(const int soundID)
     }
 }
 
-void SoundManager::loadSound() {
+void AudioManager::loadSound() {
     soundEffect[ MOVE_0 ] = Mix_LoadWAV("assets/Sound/move 0.wav");
     soundEffect[ MOVE_1 ] = Mix_LoadWAV("assets/Sound/move 1.wav");
     soundEffect[ MOVE_2 ] = Mix_LoadWAV("assets/Sound/move 2.wav");
@@ -74,7 +73,7 @@ void SoundManager::loadSound() {
     Mix_Pause(8);
 }
 
-void SoundManager::playSound() {
+void AudioManager::playSound() {
     if (dead) {
         Mix_PlayChannel(2, soundEffect[DEAD], 0);
         dead = false;
@@ -103,7 +102,7 @@ void SoundManager::playSound() {
     }
 }
 
-void SoundManager::reset()
+void AudioManager::reset()
 {
     Mix_PlayChannel(1, soundEffect[oldMoveType], -1);
 }

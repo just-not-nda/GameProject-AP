@@ -1,5 +1,4 @@
 #include "TimeManager.h"
-#include <iostream>
 
 TimeManager::TimeManager() {
     lastTick = SDL_GetTicks();
@@ -32,39 +31,17 @@ void TimeManager::setFrightenTime() {
 
 void TimeManager::resetTick(const int level) {
     while (!mode.empty()) mode.pop();
-    if (level == 1) {
-        mode.push( CID(CHASING_MODE, oo) );
-        mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-        mode.push( CID(CHASING_MODE, CHASING_TIME) );
-        mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-        mode.push( CID(CHASING_MODE, CHASING_TIME) );
-        mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-        mode.push( CID(CHASING_MODE, CHASING_TIME) );
-        mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-        FRIGHTEN_TIME = 5.0;
-    }
-    else if (level < 5) {
-        mode.push( CID(CHASING_MODE, oo) );
-        mode.push( CID(SCATTERING_MODE, 1.0) );
-        mode.push( CID(CHASING_MODE, 1033.0) );
-        mode.push( CID(SCATTERING_MODE, 5.0) );
-        mode.push( CID(CHASING_MODE, CHASING_TIME) );
-        mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-        mode.push( CID(CHASING_MODE, CHASING_TIME) );
-        mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-        FRIGHTEN_TIME = 3.0;
-    }
-    else {
-        mode.push( CID(CHASING_MODE, oo) );
-        mode.push( CID(SCATTERING_MODE, 1.0) );
-        mode.push( CID(CHASING_MODE, 1037.0) );
-        mode.push( CID(SCATTERING_MODE, 5.0) );
-        mode.push( CID(CHASING_MODE, CHASING_TIME) );
-        mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-        mode.push( CID(CHASING_MODE, CHASING_TIME) );
-        mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-        FRIGHTEN_TIME = 1.0;
-    }
+
+    mode.push( CID(CHASING_MODE, oo) );
+    mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
+    mode.push( CID(CHASING_MODE, CHASING_TIME) );
+    mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
+    mode.push( CID(CHASING_MODE, CHASING_TIME) );
+    mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
+    mode.push( CID(CHASING_MODE, CHASING_TIME) );
+    mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
+    FRIGHTEN_TIME = 10.0;
+
     lastTick = SDL_GetTicks();
 }
 
@@ -83,7 +60,7 @@ void TimeManager::updateStatus() {
 }
 
 void TimeManager::stablizeFPS() {
-    if (SDL_GetTicks() - lastFrame < 1000 / FPS) {
+    if ((int)(SDL_GetTicks() - lastFrame) < 1000 / FPS) {
         SDL_Delay(1000 / FPS + lastFrame - SDL_GetTicks());
     }
     lastFrame = SDL_GetTicks();

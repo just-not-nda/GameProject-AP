@@ -15,15 +15,15 @@ GameManager::GameManager(SDL_Renderer* &renderer) {
     CLYDE_COIN_LIMIT = 90;
     liveText = new TextManager(28);
     liveText->loadRenderText(renderer, "LIFE: ", {255, 255, 255, 255});
-    scoreText = new TextManager(28);
+    scoreText = new TextManager(45);
     scoreText->loadRenderText(renderer, "SCORE: 0", {255, 255, 255, 255});
     levelText = new TextManager(28);
     levelText->loadRenderText(renderer, "LEVEL: 1", {255, 255, 255, 255});
 
     egBoard = loadImage(renderer, "assets/GameOver.png");
-    againBut = new Button(320, 30, 315, 285); againBut->loadButton(renderer, "Play again");
+    againBut = new Button(280, 40, 325, 280); againBut->loadButton(renderer, "Play again");
     againBut->setStatus(Button::BUTTON_IN);
-    quitBut  = new Button(320, 30, 315, 335); quitBut ->loadButton(renderer, "Quit");
+    quitBut  = new Button(280, 40, 325, 330); quitBut ->loadButton(renderer, "Quit");
     quitBut ->setStatus(Button::BUTTON_OUT);
 }
 
@@ -101,23 +101,12 @@ int GameManager::getRemainLife() const {
     return life;
 }
 
-void GameManager::nextLevel() {
+void GameManager::levelUp() {
     ++level;
     eatenCoins = 0;
     eatenGhost = -1;
     currentBut = 1;
     playerDecision = WAITING;
-    if (level <= 3) {
-        PINKY_COIN_LIMIT = 5;
-        INKY_COIN_LIMIT = 30;
-        CLYDE_COIN_LIMIT = 90;
-    }
-    else if (level <= 5) {
-        PINKY_COIN_LIMIT = 0;
-        INKY_COIN_LIMIT  = 5;
-        CLYDE_COIN_LIMIT = 10;
-    }
-    else PINKY_COIN_LIMIT = INKY_COIN_LIMIT = CLYDE_COIN_LIMIT = 0;
 }
 
 bool GameManager::clearAllCoins() const {
@@ -139,8 +128,8 @@ void GameManager::renderHUD(SDL_Renderer* &renderer) {
     levelText->renderText(renderer, 0, 375, TextManager::LEFT);
     liveText->loadRenderText(renderer, "LIFE: " + to_string(life), {255, 255, 255, 255});
     liveText->renderText(renderer, 0, 405, TextManager::LEFT);
-    scoreText->loadRenderText(renderer, "SCORE: " + to_string(scores), {255, 255, 255, 255});
-    scoreText->renderText(renderer, 0, 60, TextManager::LEFT);
+    scoreText->loadRenderText(renderer, to_string(scores), {255, 255, 255, 255});
+    scoreText->renderText(renderer, 480, 80, TextManager::CENTER);
 }
 
 void GameManager::handleEGBoard(SDL_Event &e){
@@ -168,6 +157,9 @@ void GameManager::runEGBoard(SDL_Renderer* &renderer){
     SDL_RenderCopy(renderer, egBoard, nullptr, &dsRect);
     againBut->renderButton(renderer);
     quitBut ->renderButton(renderer);
+
+    scoreText->loadRenderText(renderer, to_string(scores), {234, 67, 53, 255});
+    scoreText->renderText(renderer, 470, 220, TextManager::CENTER);
 }
 
 int GameManager::getPlayerDecision() const {

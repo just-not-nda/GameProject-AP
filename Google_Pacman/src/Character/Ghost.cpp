@@ -1,7 +1,7 @@
 #include "Ghost.h"
 #include <random>
 
-Ghost::Ghost(int tileX, int tileY, bool inCage) : Object(tileX, tileY) {
+Ghost::Ghost(int tileX, int tileY, bool inCage) : Character(tileX, tileY) {
     frighten = 0;
     accele = 1;
     ghostVelocity = 2;
@@ -78,7 +78,7 @@ void Ghost::moving() {
 }
 
 void Ghost::respawn(const int tileX, const int tileY, const bool inCage) {
-    resetObjectTile(tileX, tileY);
+    resetCharacterTile(tileX, tileY);
     this->inCage = inCage;
     if (inCage == false) {
         if (rand() % 2 == 0) ghostDir = LEFT;

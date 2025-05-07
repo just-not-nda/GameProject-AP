@@ -3,7 +3,7 @@
 
 typedef pair<int, std::pair<int, int> > IP;
 
-Pacman::Pacman() : Object(PACMAN_START_TILE_X, PACMAN_START_TILE_Y) {
+Pacman::Pacman() : Character(PACMAN_START_TILE_X, PACMAN_START_TILE_Y) {
     while (!Direction.empty()) Direction.pop();
     while (!Special.empty())   Special.pop();
 }

@@ -14,7 +14,7 @@ class Button {
         TextManager* normalText;
         TextManager* selectText;
         int buttonStatus;
-        string bText;
+        string buttonText;
     public:
         static const int BUTTON_OUT = 0;
         static const int BUTTON_IN  = 1;
@@ -22,7 +22,7 @@ class Button {
         const SDL_Color normalColor = {66, 133, 244, 255};
         const SDL_Color selectColor = {234, 67, 53, 255};
 
-        Button(int Width, int Height, int scrPosX, int scrPosY);
+        Button(int width, int height, int x, int y);
 
         void loadButton(SDL_Renderer* &renderer, string text = "");
         void renderButton(SDL_Renderer* &renderer);

@@ -1,12 +1,15 @@
+#pragma once
+
 #ifndef CHARACTER_H
 #define CHARACTER_H
-
 
 class Character
 {
     private:
-        int pos_x, pos_y, tile_x, tile_y, dir;
-        int velocity_x = 0, velocity_y = 0;
+        int scrPosX, scrPosY;
+        int velX = 0, velY = 0;
+        int tileX, tileY;
+        int dir;
         bool dead;
     public:
         static const int UP = 0;
@@ -16,19 +19,19 @@ class Character
         static const int CHARACTER_WIDTH  = 30;
         static const int CHARACTER_HEIGHT = 30;
 
-        Character(int tile_x, int tile_y, int velocity_x = 0, int velocity_y = 0);
+        Character(int tileX, int tileY, int velX = 0, int velY = 0);
         ~Character() {}
 
         void move();
         bool isDead() const;
-
         int getPosX() const;
         int getPosY() const;
-
         int getTileX() const;
         int getTileY() const;
-
-
+        void reTilePos();
+        void changeVelocityDir(int velX, int velY, int dir);
+        void setDead(bool status, int id = 0);
+        void resetCharacterTile(const int tileX, const int tileY);
         void teleport();
 };
 

@@ -1,8 +1,8 @@
 #include "Button.h"
 
-Button::Button(int Width, int Height, int scrPosX, int scrPosY)
+Button::Button(int width, int height, int x, int y)
 {
-    buttonRect = {scrPosX, scrPosY, Width, Height};
+    buttonRect = {x, y, width, height};
     normalText = new TextManager(24);
     selectText = new TextManager(24);
 }
@@ -11,7 +11,7 @@ void Button::loadButton(SDL_Renderer* &renderer, string text) {
     if (text == "") return;
     normalText->loadRenderText(renderer, text, normalColor);
     selectText->loadRenderText(renderer, text, selectColor);
-    bText = text;
+    buttonText = text;
 }
 
 void Button::renderButton(SDL_Renderer* &renderer) {
@@ -34,14 +34,14 @@ void Button::setStatus(const int status) {
 }
 
 void Button::changeSoundButton(SDL_Renderer* &renderer) {
-    if (bText == "Sound: ON") bText = "Sound: OFF";
-    else bText = "Sound: ON";
-    normalText->loadRenderText(renderer, bText, normalColor);
-    selectText->loadRenderText(renderer, bText, selectColor);
+    if (buttonText == "Sound: ON") buttonText = "Sound: OFF";
+    else buttonText = "Sound: ON";
+    normalText->loadRenderText(renderer, buttonText, normalColor);
+    selectText->loadRenderText(renderer, buttonText, selectColor);
     buttonStatus = BUTTON_IN;
 }
 
 
 std::string Button::getText() const {
-    return bText;
+    return buttonText;
 }

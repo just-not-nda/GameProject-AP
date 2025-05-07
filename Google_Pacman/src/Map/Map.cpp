@@ -1,7 +1,10 @@
 #include "Map.h"
+#include <queue>
 
 bool first_load_map = true;
 int mapData[17][58];
+int color[17][58];
+
 typedef std::pair<int, int> II;
 
 Map::Map()
@@ -39,6 +42,10 @@ Map::Map()
             tile[row][col] = mapData[row][col];
         }
     }
+
+    findingCrossRoad();
+    NextCrossTileID();
+    calculateDistance();
 }
 
 int Map::getTileID(int x, int y) {
@@ -156,10 +163,10 @@ void Map::calculateDistance() {
     int dh[4] = { 0, 1, 0, -1};
     int dc[4] = {-1, 0, 1,  0};
     int dis[MAP_WIDTH * MAP_HEIGHT];
-    queue< std::pair<int, int> > visitNode;
+    queue< pair<int, int> > visitNode;
     for (int x = 0; x < MAP_WIDTH; ++x) {
         for (int y = 0; y < MAP_HEIGHT; ++y) {
-            if (isWall(std::pair<int, int> (x, y))) continue;
+            if (isWall(pair<int, int> (x, y))) continue;
             if (y == 14 && (x == 0 || x == 27)) continue;
 
             for (int startDir = 0; startDir < 4; ++ startDir) {
@@ -218,6 +225,6 @@ int Map::getDist(pair<int, int> start, pair<int, int> end, int startDir) {
 void Map::reset() {
     for (int i = 0; i < MAP_HEIGHT; ++i)
         for (int j = 0; j < MAP_WIDTH; ++j)
-            tile[i][j] = premanMap[i][j];
+            tile[i][j] = mapData[i][j];
 }
 

@@ -14,20 +14,16 @@ using namespace std;
 
 class Menu {
     private:
-        int currentButtonID;
-        int currentMenuStatus;
+        int buttonID;
+        int menuStatus;
 
         int TOTAL_BUTTON;
-        int MENU_BUTTON_WIDTH;
-        int MENU_BUTTON_HEIGHT;
-        int baseScrPosX;
-        int baseScrPosY;
+        int MENU_WIDTH;
+        int MENU_HEIGHT;
+        int x, y;
 
-        Mix_Chunk* navigationSound = Mix_LoadWAV("assets/Sound/button.wav");
-        Mix_Chunk* selectionSound = Mix_LoadWAV("assets/Sound/button.wav");
         SDL_Texture* menuTexture;
-
-        std::vector<Button* > menuButton;
+        vector<Button*> menuButton;
 
         GetError* Check = new GetError("Menu");
         bool running = false;
@@ -40,8 +36,7 @@ class Menu {
         static const bool ON = true;
         static const bool OFF = false;
 
-        Menu(const int baseScrPosX, const int baseScrPosY, const int totalButton, const int buttonWidth, const int buttonHeight);
-
+        Menu(const int x, const int y, const int totalButton, const int buttonWidth, const int buttonHeight);
         ~Menu();
 
         void init(SDL_Renderer* &renderer, const string imgPath, vector<string> &buttonText);
@@ -51,7 +46,6 @@ class Menu {
         int getStatus() const;
         void reOpen();
         void changeRunStatus();
-        bool getSoundState() const;
 };
 
 #endif // _MENU_H_

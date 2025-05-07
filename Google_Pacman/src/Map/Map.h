@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef MAP_H
 #define MAP_H
 
@@ -18,7 +20,13 @@ class Map
         const string MAP_FILE = "src/Map/MAP.txt";
 
         int tile[MAP_HEIGHT][MAP_WIDTH];
+        int dist[MAP_WIDTH * MAP_HEIGHT][MAP_WIDTH * MAP_HEIGHT][4];
+        pair<int, int> nextCrossID[MAP_HEIGHT][MAP_WIDTH][4];
+        bool markCross[MAP_HEIGHT][MAP_WIDTH][4];
 
+        void findingCrossRoad();
+        void calculateDistance();
+        void NextCrossTileID();
     public:
         static const int UP = 0;
         static const int RIGHT = 1;

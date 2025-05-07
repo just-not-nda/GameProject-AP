@@ -42,7 +42,7 @@ class Pacman : public Character
         void turn();
         void eraseSpecial();
         void respawn() {
-            resetObjectTile(PACMAN_START_TILE_X, PACMAN_START_TILE_Y);
+            resetCharacterTile(PACMAN_START_TILE_X, PACMAN_START_TILE_Y);
             while (!Direction.empty()) Direction.pop();
             while (!Special.empty())   Special.pop();
         }

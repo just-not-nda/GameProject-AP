@@ -25,14 +25,14 @@ private:
     TimeManager* timeManager;
     GameManager* gameManager;
     AudioManager* audioManager;
-    SDL_Texture* nextLevel;
+    SDL_Texture* levelUp;
     SDL_Texture* ready;
     bool runningEGBoard = false;
     int waitTime = 0;
 protected:
         void respawnObject();
         void ghostMove(Ghost* &ghost);
-        void pacmanMeatGhost(Ghost* &ghost);
+        void pacmanMeetGhost(Ghost* &ghost);
         void renderGhost(SDL_Renderer* &renderer, Ghost* &ghost, int ghostID);
 public:
     Engine()
@@ -51,7 +51,7 @@ public:
     }
     ~Engine()
     {
-        delete map;
+            delete map;
             map = nullptr;
             delete pacman;
             pacman = nullptr;
@@ -63,8 +63,8 @@ public:
             clyde = nullptr;
             delete inky;
             inky = nullptr;
-            SDL_DestroyTexture(nextLevel);
-            nextLevel = nullptr;
+            SDL_DestroyTexture(levelUp);
+            levelUp = nullptr;
             SDL_DestroyTexture(ready);
             ready = nullptr;
 
@@ -80,12 +80,8 @@ public:
     }
 
     void newGame();
-
     void init(SDL_Renderer* &renderer);
-
     void handleEvent(SDL_Event &e);
-
     void loop(bool &exitToMenu);
-
     void render(SDL_Renderer* &renderer);
 };

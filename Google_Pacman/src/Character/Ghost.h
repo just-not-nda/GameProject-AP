@@ -3,9 +3,9 @@
 #ifndef _GHOST_H_
 #define _GHOST_H_
 
-#include "Object.h"
+#include "Character.h"
 
-class Ghost : public Object {
+class Ghost : public Character {
     private:
         int nextTileX;
         int nextTileY;
@@ -50,7 +50,7 @@ class Ghost : public Object {
         bool isScattering();
         bool isFrighten();
         void setDestination(int tilX, int tilY, int _accele = 1);
-        void movin();
+        void moving();
         void respawn(const int tileX, const int tileY, const bool inCage);
         bool isInCage() const;
 };

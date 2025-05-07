@@ -46,6 +46,13 @@ void Texture::loadTile(SDL_Renderer* &renderer) {
     img = nullptr;
 }
 
+bool Texture::pacmanIsDead() {
+    if (pacmanFrame == 109) {
+        pacmanFrame = 0; return true;
+    }
+    return false;
+}
+
 void Texture::renderTile(SDL_Renderer* &renderer, int tileID, SDL_Rect* tileRect) {
     SDL_RenderCopy(renderer, tileTexture, &tileSprite[tileID], tileRect);
 }

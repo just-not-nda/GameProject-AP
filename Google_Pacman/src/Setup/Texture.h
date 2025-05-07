@@ -44,6 +44,8 @@ class Texture
 
         Texture();
         ~Texture();
+
+        bool pacmanIsDead();
         void loadTile(SDL_Renderer* &renderer);
         void renderTile(SDL_Renderer* &renderer, int tileID, SDL_Rect* tileRect);
         void loadCharacterTextures(SDL_Renderer* &renderer);

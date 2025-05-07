@@ -7,7 +7,7 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <vector>
-#include "../Object/Ghost.h"
+#include "Ghost.h"
 #include "TextManager.h"
 #include "Button.h"
 
@@ -35,7 +35,7 @@ class GameManager {
         Button* againBut;
         Button* quitBut;
     protected:
-        SDL_Texture* loadImage(SDL_Renderer* &renderer, const std::string imagePath);
+        SDL_Texture* loadImage(SDL_Renderer* &renderer, const string imagePath);
     public:
 
         const int TOTAL_COINS = 275;
@@ -51,7 +51,7 @@ class GameManager {
         ~GameManager();
 
         void reset();
-        void nextLevel();
+        void levelUp();
         void eatCoins(const int typeOfCoin);
         void eatGhost(const int ghostTileX, const int ghostTileY);
         void lostALife();

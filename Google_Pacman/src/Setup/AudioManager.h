@@ -7,7 +7,7 @@
 #include <vector>
 #include "GetError.h"
 
-class SoundManager {
+class AudioManager {
     private:
         bool dead;
         bool ghostTurnBlue;
@@ -32,8 +32,8 @@ class SoundManager {
         static const int NORMAL_GHOST = 11;
         static const int REVIVAL_GHOST = 12;
 
-        SoundManager();
-        ~SoundManager();
+        AudioManager();
+        ~AudioManager();
 
         void insertPlayList(const int soundID);
         void loadSound();
