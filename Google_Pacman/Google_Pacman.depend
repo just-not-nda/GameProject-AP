@@ -65,3 +65,18 @@
 
 1746463093 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\text.h
 
+1746550233 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\gamecore.cpp
+	"GameCore.h"
+
+1746550233 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\gamecore.h
+
+1746550306 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\gamemanager.cpp
+	"GameManager.h"
+
+1746550306 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\gamemanager.h
+
+1746550280 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\gamestate.cpp
+	"GameState.h"
+
+1746550280 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\gamestate.h
+
