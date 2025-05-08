@@ -5,7 +5,7 @@ using namespace std;
 GameManager::GameManager(SDL_Renderer* &renderer) {
     level = 1;
     life = 1;
-    eatenCoins = 0;
+    eatenDots = 0;
     eatenGhost = -1;
     scores = 0;
     playerDecision = WAITING;
@@ -49,7 +49,7 @@ void GameManager::reset() {
     level = 1;
     life = 1;
     scores = 0;
-    eatenCoins = 0;
+    eatenDots = 0;
     eatenGhost = -1;
     currentBut = 1;
     PINKY_COIN_LIMIT = 5;
@@ -60,10 +60,10 @@ void GameManager::reset() {
     quitBut->setStatus(Button::BUTTON_OUT);
 }
 
-void GameManager::eatCoins(const int typeOfCoin) {
-    ++eatenCoins;
-    if (typeOfCoin == normalCoin) scores += 10;
-    else if (typeOfCoin == superCoin) {
+void GameManager::eatDots(const int type_of_dot) {
+    ++eatenDots;
+    if (type_of_dot == dot) scores += 10;
+    else if (type_of_dot == power_pellect) {
         eatenGhost = -1;
         scores += 50;
     }
@@ -103,14 +103,14 @@ int GameManager::getRemainLife() const {
 
 void GameManager::levelUp() {
     ++level;
-    eatenCoins = 0;
+    eatenDots = 0;
     eatenGhost = -1;
     currentBut = 1;
     playerDecision = WAITING;
 }
 
-bool GameManager::clearAllCoins() const {
-    return TOTAL_COINS == eatenCoins;
+bool GameManager::clearAllDots() const {
+    return TOTAL_DOTS == eatenDots;
 }
 
 int GameManager::getLevel() const {
@@ -118,9 +118,9 @@ int GameManager::getLevel() const {
 }
 
 void GameManager::handleGhostPos(Ghost* &pinky, Ghost* &inky, Ghost* &clyde) {
-    if (pinky->isInCage() && eatenCoins >= PINKY_COIN_LIMIT) pinky->respawn(Ghost::GHOST_START_TILE_X, Ghost::GHOST_START_TILE_Y, false);
-    if (inky ->isInCage() && eatenCoins >=  INKY_COIN_LIMIT) inky ->respawn(Ghost::GHOST_START_TILE_X, Ghost::GHOST_START_TILE_Y, false);
-    if (clyde->isInCage() && eatenCoins >= CLYDE_COIN_LIMIT) clyde->respawn(Ghost::GHOST_START_TILE_X, Ghost::GHOST_START_TILE_Y, false);
+    if (pinky->isInCage() && eatenDots >= PINKY_COIN_LIMIT) pinky->respawn(Ghost::GHOST_START_TILE_X, Ghost::GHOST_START_TILE_Y, false);
+    if (inky ->isInCage() && eatenDots >=  INKY_COIN_LIMIT) inky ->respawn(Ghost::GHOST_START_TILE_X, Ghost::GHOST_START_TILE_Y, false);
+    if (clyde->isInCage() && eatenDots >= CLYDE_COIN_LIMIT) clyde->respawn(Ghost::GHOST_START_TILE_X, Ghost::GHOST_START_TILE_Y, false);
 }
 
 void GameManager::renderHUD(SDL_Renderer* &renderer) {
@@ -166,6 +166,6 @@ int GameManager::getPlayerDecision() const {
     return playerDecision;
 }
 
-int GameManager::getRemainCoin() const {
-    return TOTAL_COINS - eatenCoins;
+int GameManager::getRemainDot() const {
+    return TOTAL_DOTS - eatenDots;
 }

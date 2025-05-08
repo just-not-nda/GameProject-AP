@@ -15,7 +15,7 @@ class GameManager {
     private:
         int level;
         int life;
-        int eatenCoins;
+        int eatenDots;
         int eatenGhost;
         int scores;
         int playerDecision;
@@ -38,10 +38,10 @@ class GameManager {
         SDL_Texture* loadImage(SDL_Renderer* &renderer, const string imagePath);
     public:
 
-        const int TOTAL_COINS = 275;
-        static const int normalCoin = 30;
-        static const int superCoin = 42;
-        static const int notCoin = 0;
+        const int TOTAL_DOTS = 275;
+        static const int dot = 30;
+        static const int power_pellect = 42;
+        static const int notDot = 0;
         static const int pauseGame = 1;
         static const int AGAIN = 2;
         static const int QUIT  = 3;
@@ -52,17 +52,17 @@ class GameManager {
 
         void reset();
         void levelUp();
-        void eatCoins(const int typeOfCoin);
+        void eatDots(const int type_of_dot);
         void eatGhost(const int ghostTileX, const int ghostTileY);
         void lostALife();
         int getEatenGhostStreak() const;
         int getEatenGhostPosX() const;
         int getEatenGhostPosY() const;
         int getRemainLife() const;
-        bool clearAllCoins() const;
+        bool clearAllDots() const;
         int getLevel() const;
         int getPlayerDecision() const;
-        int getRemainCoin() const;
+        int getRemainDot() const;
         void handleGhostPos(Ghost* &pinky, Ghost* &inky, Ghost* &clyde);
         void handleEGBoard(SDL_Event &e);
         void renderHUD(SDL_Renderer* &renderer);

@@ -199,7 +199,7 @@ void Engine::render(SDL_Renderer* &renderer)
 
 void Engine::loop(bool &exitToMenu)
 {
-    if (gameManager->clearAllCoins()) {
+    if (gameManager->clearAllDots()) {
         if (waitTime > 0) --waitTime;
         else {
             gameManager->levelUp();
@@ -251,7 +251,7 @@ void Engine::loop(bool &exitToMenu)
         }
     }
 
-    int remainCoin = gameManager->getRemainCoin();
+    int remainCoin = gameManager->getRemainDot();
     if (remainCoin < 50) audioManager->insertPlayList(AudioManager::MOVE_3);
     else if (remainCoin < 100) audioManager->insertPlayList(AudioManager::MOVE_2);
     else if (remainCoin < 150) audioManager->insertPlayList(AudioManager::MOVE_1);
@@ -259,12 +259,12 @@ void Engine::loop(bool &exitToMenu)
 
     pacmanTileX = pacman->getTileX();
     pacmanTileY = pacman->getTileY();
-    int typeOfCoin = map->eatCoins(pacmanTileX, pacmanTileY);
+    int type_of_dot = map->eatCoins(pacmanTileX, pacmanTileY);
 
-    if (typeOfCoin != GameManager::notCoin) {
-        gameManager->eatCoins(typeOfCoin);
+    if (type_of_dot != GameManager::notDot) {
+        gameManager->eatDots(type_of_dot);
         audioManager->insertPlayList(AudioManager::EAT_DOT);
-        if (typeOfCoin == GameManager::superCoin) {
+        if (type_of_dot == GameManager::power_pellect) {
             timeManager->setFrightenTime();
             audioManager->insertPlayList(AudioManager::GHOST_TURN_BLUE);
             if (!blinky->isDead()) blinky->setFrighten(true);
@@ -345,7 +345,7 @@ void Engine::loop(bool &exitToMenu)
 
     gameManager->handleGhostPos(pinky, inky, clyde);
 
-    if (gameManager->clearAllCoins()) {
+    if (gameManager->clearAllDots()) {
         audioManager->insertPlayList(AudioManager::WINNING);
         waitTime = 100;
     }
@@ -412,25 +412,25 @@ void Engine::ghostMove(Ghost* &ghost) {
 
             int distanceMIN;
                 if (ghostOldDir == Map::UP) {
-                    distanceMIN = std::min(distanceUP, std::min(distanceLEFT, distanceRIGHT));
+                    distanceMIN = min(distanceUP, min(distanceLEFT, distanceRIGHT));
                     if (distanceMIN == distanceUP) ghost->setDir(Map::UP);
                     else if (distanceMIN == distanceLEFT) ghost->setDir(Map::LEFT);
                     else ghost->setDir(Map::RIGHT);
                 }
                 else if (ghostOldDir == Map::DOWN) {
-                    distanceMIN = std::min(distanceDOWN, std::min(distanceLEFT, distanceRIGHT));
+                    distanceMIN = min(distanceDOWN, min(distanceLEFT, distanceRIGHT));
                     if (distanceMIN == distanceDOWN) ghost->setDir(Map::DOWN);
                     else if (distanceMIN == distanceLEFT) ghost->setDir(Map::LEFT);
                     else ghost->setDir(Map::RIGHT);
                 }
                 else if (ghostOldDir == Map::LEFT) {
-                    distanceMIN = std::min(distanceUP, std::min(distanceDOWN, distanceLEFT));
+                    distanceMIN = min(distanceUP, min(distanceDOWN, distanceLEFT));
                     if (distanceMIN == distanceUP) ghost->setDir(Map::UP);
                     else if (distanceMIN == distanceDOWN) ghost->setDir(Map::DOWN);
                     else ghost->setDir(Map::LEFT);
                 }
                 else if (ghostOldDir == Map::RIGHT) {
-                    distanceMIN = std::min(distanceUP, std::min(distanceRIGHT, distanceDOWN));
+                    distanceMIN = min(distanceUP, min(distanceRIGHT, distanceDOWN));
                     if (distanceMIN == distanceUP) ghost->setDir(Map::UP);
                     else if (distanceMIN == distanceRIGHT) ghost->setDir(Map::RIGHT);
                     else ghost->setDir(Map::DOWN);
