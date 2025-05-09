@@ -1,14 +1,14 @@
 #include "Ghost.h"
-#include <random>
 
-Ghost::Ghost(int tileX, int tileY, bool inCage) : Character(tileX, tileY) {
+
+Ghost::Ghost(int tileX, int tileY, bool atHome) : Character(tileX, tileY) {
     frighten = 0;
-    accele = 1;
+    speedMode = 1;
     ghostVelocity = 2;
     scattering = false;
     nextTileX = tileX, nextTileY = tileY;
-    this->inCage = inCage;
-    if (inCage == false) ghostDir = RIGHT;
+    this->atHome = atHome;
+    if (atHome == false) ghostDir = RIGHT;
     else ghostDir = UP;
 }
 
@@ -29,12 +29,12 @@ void Ghost::setDir(int dir) {
 }
 
 void Ghost::setFrighten(const bool status) {
-    if (isInCage()) return;
+    if (isAtHome()) return;
     if (frighten != status) reTilePos();
     frighten = status;
     if (status) {
         ghostDir = (ghostDir + 2) % 4;
-        accele = 1;
+        speedMode = 1;
     }
 }
 
@@ -50,17 +50,17 @@ bool Ghost::isFrighten() {
     return frighten;
 }
 
-void Ghost::setDestination(int tilX, int tilY, int _accele) {
-    this->accele = _accele;
+void Ghost::setTargetTile(int tilX, int tilY, int _speedMode) {
+    this->speedMode = _speedMode;
     nextTileX = tilX;
     nextTileY = tilY;
 }
 
 void Ghost::moving() {
-    int velX, velY, dir;
-    velX = velY = 0; dir = -1;
+    int veloX, veloY, dir;
+    veloX = veloY = 0; dir = -1;
 
-    if (accele == 1) {
+    if (speedMode == 1) {
         if (frighten) ghostVelocity = 1;
         else if (isDead()) ghostVelocity = 4;
         else ghostVelocity = 2;
@@ -68,25 +68,37 @@ void Ghost::moving() {
     else ghostVelocity = 4;
 
     switch (ghostDir) {
-        case UP:    velY -= ghostVelocity; dir = UP;    break;
-        case DOWN:  velY += ghostVelocity; dir = DOWN;  break;
-        case LEFT:  velX -= ghostVelocity; dir = LEFT;  break;
-        case RIGHT: velX += ghostVelocity; dir = RIGHT; break;
+        case UP:    {
+            veloY -= ghostVelocity;
+            dir = UP;
+            break; }
+        case DOWN:  {
+            veloY += ghostVelocity;
+            dir = DOWN;
+            break; }
+        case LEFT:  {
+            veloX -= ghostVelocity;
+            dir = LEFT;
+            break; }
+        case RIGHT: {
+            veloX += ghostVelocity;
+            dir = RIGHT;
+            break;}
     }
-    changeVelocityDir(velX, velY, dir);
-    move();
+    changeVelocityDir(veloX, veloY, dir);
+    go();
 }
 
-void Ghost::respawn(const int tileX, const int tileY, const bool inCage) {
+void Ghost::respawn(const int tileX, const int tileY, const bool atHome) {
     resetCharacterTile(tileX, tileY);
-    this->inCage = inCage;
-    if (inCage == false) {
+    this->atHome = atHome;
+    if (atHome == false) {
         if (rand() % 2 == 0) ghostDir = LEFT;
         else ghostDir = RIGHT;
     }
     else ghostDir = UP;
 }
 
-bool Ghost::isInCage() const {
-    return inCage;
+bool Ghost::isAtHome() const {
+    return atHome;
 }

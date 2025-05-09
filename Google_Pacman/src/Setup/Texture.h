@@ -1,9 +1,11 @@
+#pragma once
+
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
 #include <SDL.h>
 #include <SDL_image.h>
-#include "../Setup/GetError.h"
+#include "GetError.h"
 
 class Texture
 {

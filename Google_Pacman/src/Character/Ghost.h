@@ -4,17 +4,13 @@
 #define _GHOST_H_
 
 #include "Character.h"
+#include <random>
 
 class Ghost : public Character {
     private:
-        int nextTileX;
-        int nextTileY;
-        int ghostDir;
-        bool frighten;
-        bool scattering;
-        bool inCage;
-        int ghostVelocity;
-        int accele;
+        int nextTileX, nextTileY, ghostDir;
+        bool frighten, scattering, atHome;
+        int ghostVelocity, speedMode;
     public:
         static const int GHOST_START_TILE_X = 35;
         static const int GHOST_START_TILE_Y = 4;
@@ -39,7 +35,7 @@ class Ghost : public Character {
         static const int CLYDE_START_TILE_X = 37;
         static const int CLYDE_START_TILE_Y = 7;
 
-        Ghost(int tileX, int tileY, bool inCage);
+        Ghost(int tileX, int tileY, bool atHome);
 
         int getNextTileX() const;
         int getNextTileY() const;
@@ -49,10 +45,10 @@ class Ghost : public Character {
         void setScattering(const bool status);
         bool isScattering();
         bool isFrighten();
-        void setDestination(int tilX, int tilY, int _accele = 1);
+        void setTargetTile(int tilX, int tilY, int _speedMode = 1);
         void moving();
-        void respawn(const int tileX, const int tileY, const bool inCage);
-        bool isInCage() const;
+        void respawn(const int tileX, const int tileY, const bool atHome);
+        bool isAtHome() const;
 };
 
 #endif // _GHOST_H_

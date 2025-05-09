@@ -1,7 +1,7 @@
 #include "TextManager.h"
 
 TextManager::TextManager(int fontSize) {
-    font = TTF_OpenFont(FONT_NAME.c_str(), fontSize);
+    font = TTF_OpenFont(FONT_FILE.c_str(), fontSize);
     textTexture = nullptr;
     textSurface = nullptr;
 }
@@ -32,11 +32,11 @@ void TextManager::loadRenderText(SDL_Renderer* &renderer, string text, SDL_Color
     textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
 }
 
-void TextManager::renderText(SDL_Renderer* &renderer, int scrPosX, int scrPosY, const int type) {
-    dsRect = {scrPosX, scrPosY, textSurface->w, textSurface->h};
+void TextManager::renderText(SDL_Renderer* &renderer, int x, int y, const int type) {
+    dsRect = {x, y, textSurface->w, textSurface->h};
     if (type == CENTER) {
-        dsRect.x = scrPosX - textSurface->w / 2;
-        dsRect.y = scrPosY - textSurface->h / 2;
+        dsRect.x = x - textSurface->w / 2;
+        dsRect.y = y - textSurface->h / 2;
     }
     SDL_RenderCopy(renderer, textTexture, nullptr, &dsRect);
 }

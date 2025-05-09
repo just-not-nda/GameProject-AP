@@ -9,13 +9,17 @@
 #include "TimeManager.h"
 #include "GameManager.h"
 #include "AudioManager.h"
+#include <utility>
+#include <limits>
+#include <random>
+#include <time.h>
 using namespace std;
 
 class Engine
 {
 private:
 
-    Map* map;
+    Map* _map;
     Pacman* pacman = nullptr;
     Ghost* blinky = nullptr;
     Ghost* pinky = nullptr;
@@ -31,13 +35,13 @@ private:
     int waitTime = 0;
 protected:
         void respawnObject();
-        void ghostMove(Ghost* &ghost);
+        void ghostGo(Ghost* &ghost);
         void pacmanMeetGhost(Ghost* &ghost);
         void renderGhost(SDL_Renderer* &renderer, Ghost* &ghost, int ghostID);
 public:
     Engine()
     {
-        map = nullptr;
+        _map = nullptr;
         pacman = nullptr;
         blinky = nullptr;
         pinky  = nullptr;
@@ -51,8 +55,8 @@ public:
     }
     ~Engine()
     {
-            delete map;
-            map = nullptr;
+            delete _map;
+            _map = nullptr;
             delete pacman;
             pacman = nullptr;
             delete blinky;

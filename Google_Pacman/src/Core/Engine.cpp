@@ -1,17 +1,12 @@
 #include "Engine.h"
-#include <iostream>
-#include <utility>
-#include <limits>
-#include <random>
-#include <time.h>
 
-typedef std::pair<int, int> II;
-typedef std::pair<int, std::pair<int, int> > IP;
+typedef pair<int, int> II;
+typedef pair<int, pair<int, int> > IP;
 
 void Engine::init(SDL_Renderer* &renderer)
 {
 
-    map = new Map();
+    _map = new Map();
 
     texture = new Texture();
     texture->loadTile(renderer);
@@ -32,7 +27,7 @@ void Engine::init(SDL_Renderer* &renderer)
 }
 
 void Engine::newGame() {
-    map->reset();
+    _map->reset();
     gameManager->reset();
     delete pacman;
     pacman = new Pacman();
@@ -46,8 +41,8 @@ void Engine::newGame() {
     clyde  = new Ghost(Ghost::CLYDE_START_TILE_X, Ghost::CLYDE_START_TILE_Y, true);
 
     audioManager->insertPlayList(AudioManager::START);
-    timeManager->resetTick(gameManager->getLevel());
-    timeManager->pauseTick(true);
+    timeManager->reset(gameManager->getLevel());
+    timeManager->pauseTime(true);
     runningEGBoard = false;
 }
 
@@ -63,7 +58,7 @@ void Engine::respawnObject() {
     delete clyde;
     clyde  = new Ghost(Ghost::CLYDE_START_TILE_X, Ghost::INKY_START_TILE_Y, true);
     audioManager->reset();
-    timeManager->pauseTick(false);
+    timeManager->pauseTime(false);
 }
 
 
@@ -98,41 +93,37 @@ void Engine::handleEvent(SDL_Event &e) {
                 newDir = 3;
 
             if (lastDir == -1) {
-                if (map->canChangeDir(pacmanTileX, pacmanTileY, newDir)) {
-                    pacman->eraseSpecial();
-                    pacman->pushtoStack(newDir);
+                if (_map->canChangeDir(pacmanTileX, pacmanTileY, newDir)) {
+                    pacman->eraseTurnPoints();
+                    pacman->updateDir(newDir);
                 }
             }
             else {
                 if (newDir % 2 == lastDir % 2) {
-                    if (map->canChangeDir(pacmanTileX, pacmanTileY, newDir)) {
-                        pacman->pushtoStack(newDir);
-                        pacman->eraseSpecial();
+                    if (_map->canChangeDir(pacmanTileX, pacmanTileY, newDir)) {
+                        pacman->updateDir(newDir);
+                        pacman->eraseTurnPoints();
                     }
                 }
                 else {
-                    pair<int, int> nextCross = map->getnextCrossID(pacmanTileX, pacmanTileY, lastDir);
+                    pair<int, int> nextCross = _map->getnextCrossID(pacmanTileX, pacmanTileY, lastDir);
                     if (lastDir % 2 == 1 && newDir % 2 == 0) {
                         if (pacmanPosY == pacmanTileY * 16) {
-                            if (map->canChangeDir(pacmanTileX, pacmanTileY, newDir)) {
-                                pacman->pushSpecialStack(newDir, II(pacmanTileX, pacmanTileY));
+                            if (_map->canChangeDir(pacmanTileX, pacmanTileY, newDir)) {
+                                pacman->addTurn(newDir, II(pacmanTileX, pacmanTileY));
                             }
-                            else if (nextCross != II(-1, -1) &&
-                                     !map->besideCrossIsWall(nextCross, newDir) &&
-                                     abs(pacmanPosX - nextCross.first * 16) <= 32) {
-                                pacman->pushSpecialStack(newDir, nextCross);
+                            else if (nextCross != II(-1, -1) && !_map->besideCrossIsWall(nextCross, newDir) && abs(pacmanPosX - nextCross.first * 16) <= 32) {
+                                pacman->addTurn(newDir, nextCross);
                             }
                         }
                     }
                     else if (lastDir % 2 == 0 && newDir % 2 == 1) {
                         if (pacmanPosX == pacmanTileX * 16) {
-                            if (map->canChangeDir(pacmanTileX, pacmanTileY, newDir)) {
-                                pacman->pushSpecialStack(newDir, II(pacmanTileX, pacmanTileY));
+                            if (_map->canChangeDir(pacmanTileX, pacmanTileY, newDir)) {
+                                pacman->addTurn(newDir, II(pacmanTileX, pacmanTileY));
                             }
-                            else if (nextCross != II(-1, -1) &&
-                                     !map->besideCrossIsWall(nextCross, newDir) &&
-                                     abs(pacmanPosY - nextCross.second * 16) <= 32) {
-                                pacman->pushSpecialStack(newDir, nextCross);
+                            else if (nextCross != II(-1, -1) && !_map->besideCrossIsWall(nextCross, newDir) && abs(pacmanPosY - nextCross.second * 16) <= 32) {
+                                pacman->addTurn(newDir, nextCross);
                             }
                         }
                     }
@@ -154,7 +145,7 @@ void Engine::render(SDL_Renderer* &renderer)
     for (int row = 0; row < 17; ++row) {
         for (int col = 0; col < 58; ++col) {
             dstRect = { col * 16, row * 16 + 100, 16, 16 };
-            int tileID = map->getTileID(col, row);
+            int tileID = _map->getTileID(col, row);
             texture->renderTile(renderer, tileID, &dstRect);
         }
     }
@@ -183,7 +174,7 @@ void Engine::render(SDL_Renderer* &renderer)
         }
         else texture->renderPacman(renderer, pacman->getPosX(), pacman->getPosY(), dir);
         if (waitTime > 0) {
-            dstRect = {315, 88, 300, 300};
+            dstRect = {315, 108, 300, 200};
             SDL_RenderCopy(renderer, levelUp, nullptr, &dstRect);
         }
         if (Mix_Playing(4)) {
@@ -203,14 +194,14 @@ void Engine::loop(bool &exitToMenu)
         if (waitTime > 0) --waitTime;
         else {
             gameManager->levelUp();
-            timeManager->resetTick(gameManager->getLevel());
+            timeManager->reset(gameManager->getLevel());
             respawnObject();
-            map->reset();
+            _map->reset();
         }
         return;
     }
     if (Mix_Playing(2) || Mix_Playing(4)) {
-        if (Mix_Playing(2)) timeManager->pauseTick(true);
+        if (Mix_Playing(2)) timeManager->pauseTime(true);
         return;
     }
     if (pacman->isDead()) {
@@ -235,14 +226,14 @@ void Engine::loop(bool &exitToMenu)
 
     if (!pacman->isDead() && lastDir != -1) {
         if (pacmanTileX * 16 == pacmanPosX && pacmanTileY * 16 == pacmanPosY) {
-            if (map->iscrossRoad(pacmanTileX, pacmanTileY)) {
-                if (!pacman->emptySpecial() && pacman->getSpecial() == II(pacmanTileX, pacmanTileY)) pacman->turn();
+            if (_map->iscrossRoad(pacmanTileX, pacmanTileY)) {
+                if (!pacman->emptyTurnPoints() && pacman->getTurnPoints() == II(pacmanTileX, pacmanTileY)) pacman->turn();
             }
-            if (map->canChangeDir(pacmanTileX, pacmanTileY, pacman->getDir())) pacman->moving();
+            if (_map->canChangeDir(pacmanTileX, pacmanTileY, pacman->getDir())) pacman->moving();
             else pacman->stopmoving();
         }
         else {
-            if (map->canChangeDir(pacmanTileX, pacmanTileY, lastDir)) pacman->moving();
+            if (_map->canChangeDir(pacmanTileX, pacmanTileY, lastDir)) pacman->moving();
             else {
                 if (pacmanTileX * 16 == pacmanPosX && pacmanTileY * 16 != pacmanPosY) pacman->moving();
                 else if (pacmanTileX * 16 != pacmanPosX && pacmanTileY * 16 == pacmanPosY) pacman->moving();
@@ -259,7 +250,7 @@ void Engine::loop(bool &exitToMenu)
 
     pacmanTileX = pacman->getTileX();
     pacmanTileY = pacman->getTileY();
-    int type_of_dot = map->eatCoins(pacmanTileX, pacmanTileY);
+    int type_of_dot = _map->eatCoins(pacmanTileX, pacmanTileY);
 
     if (type_of_dot != GameManager::notDot) {
         gameManager->eatDots(type_of_dot);
@@ -293,55 +284,55 @@ void Engine::loop(bool &exitToMenu)
     if (!pacman->emptyDirStack()) lastDir = pacman->getDir();
 
     if (!pacman->isDead()) {
-        timeManager->pauseTick(false);
+        timeManager->pauseTime(false);
         if (blinky->isDead())
-            blinky->setDestination(35, 4);
+            blinky->setTargetTile(35, 4);
         else if (!blinky->isScattering())
-            blinky->setDestination(pacmanTileX, pacmanTileY);
-        else blinky->setDestination(Ghost::DEFAULT_BLINKY_TILE_X, Ghost::DEFAULT_BLINKY_TILE_Y);
+            blinky->setTargetTile(pacmanTileX, pacmanTileY);
+        else blinky->setTargetTile(Ghost::DEFAULT_BLINKY_TILE_X, Ghost::DEFAULT_BLINKY_TILE_Y);
 
         if (pinky->isDead())
-            pinky->setDestination(35, 4);
+            pinky->setTargetTile(35, 4);
         else if (!pinky->isScattering()) {
             switch (lastDir) {
                 case Map::UP:
-                    pinky->setDestination(pacmanTileX, pacmanTileY - 4);
+                    pinky->setTargetTile(pacmanTileX, pacmanTileY - 4);
                     break;
                 case Map::DOWN:
-                    pinky->setDestination(pacmanTileX, pacmanTileY + 4);
+                    pinky->setTargetTile(pacmanTileX, pacmanTileY + 4);
                     break;
                 case Map::LEFT:
-                    pinky->setDestination(pacmanTileX - 4, pacmanTileY);
+                    pinky->setTargetTile(pacmanTileX - 4, pacmanTileY);
                     break;
                 case Map::RIGHT:
-                    pinky->setDestination(pacmanTileX + 4, pacmanTileY);
+                    pinky->setTargetTile(pacmanTileX + 4, pacmanTileY);
                     break;
             }
         }
-        else pinky->setDestination(Ghost::DEFAULT_PINKY_TILE_X, Ghost::DEFAULT_PINKY_TILE_Y);
+        else pinky->setTargetTile(Ghost::DEFAULT_PINKY_TILE_X, Ghost::DEFAULT_PINKY_TILE_Y);
 
         if (inky->isDead())
-            inky->setDestination(35, 4);
+            inky->setTargetTile(35, 4);
         else if (!inky->isScattering())
-            inky->setDestination(2 * pacmanTileX - blinky->getTileX(), 2 * pacmanTileY - blinky->getTileY());
-        else inky->setDestination(Ghost::DEFAULT_INKY_TILE_X, Ghost::DEFAULT_INKY_TILE_Y);
+            inky->setTargetTile(2 * pacmanTileX - blinky->getTileX(), 2 * pacmanTileY - blinky->getTileY());
+        else inky->setTargetTile(Ghost::DEFAULT_INKY_TILE_X, Ghost::DEFAULT_INKY_TILE_Y);
 
         if (clyde->isDead())
-            clyde->setDestination(35, 4);
+            clyde->setTargetTile(35, 4);
         else if (!clyde->isScattering()) {
             if ((pacmanTileX - clyde->getTileX()) * (pacmanTileX - clyde->getTileX()) + (pacmanTileY - clyde->getTileY()) * (pacmanTileY - clyde->getTileY()) <= 64)
-                clyde->setDestination(Ghost::DEFAULT_CLYDE_TILE_X, Ghost::DEFAULT_CLYDE_TILE_Y);
+                clyde->setTargetTile(Ghost::DEFAULT_CLYDE_TILE_X, Ghost::DEFAULT_CLYDE_TILE_Y);
             else
-                clyde->setDestination(pacmanTileX, pacmanTileY);
+                clyde->setTargetTile(pacmanTileX, pacmanTileY);
         }
-        else clyde->setDestination(Ghost::DEFAULT_CLYDE_TILE_X, Ghost::DEFAULT_CLYDE_TILE_Y);
+        else clyde->setTargetTile(Ghost::DEFAULT_CLYDE_TILE_X, Ghost::DEFAULT_CLYDE_TILE_Y);
 
     }
     pacman->teleport();
-    ghostMove(blinky);
-    ghostMove(pinky);
-    ghostMove(inky);
-    ghostMove(clyde);
+    ghostGo(blinky);
+    ghostGo(pinky);
+    ghostGo(inky);
+    ghostGo(clyde);
 
     gameManager->handleGhostPos(pinky, inky, clyde);
 
@@ -351,7 +342,7 @@ void Engine::loop(bool &exitToMenu)
     }
 }
 
-void Engine::ghostMove(Ghost* &ghost) {
+void Engine::ghostGo(Ghost* &ghost) {
     if (ghost == nullptr) return;
     int ghostTileX = ghost->getTileX();
     int ghostTileY = ghost->getTileY();
@@ -366,7 +357,7 @@ void Engine::ghostMove(Ghost* &ghost) {
             int validDirs = 0;
             int lastValidDir = -1;
             for (int d = 0; d < 4; ++d) {
-                if (map->canChangeDir(ghostTileX, ghostTileY, d)) {
+                if (_map->canChangeDir(ghostTileX, ghostTileY, d)) {
                     ++validDirs;
                     lastValidDir = d;
                 }
@@ -375,40 +366,40 @@ void Engine::ghostMove(Ghost* &ghost) {
                 ghost->setDir(lastValidDir);
             }
 
-        if (map->iscrossRoad(ghostTileX, ghostTileY)) {
+        if (_map->iscrossRoad(ghostTileX, ghostTileY)) {
             if (ghost->isFrighten()) {
 
-            stack<int> whichDir;
+            stack<int> movableDirs;
                 if (ghostOldDir % 2 == 1) {
-                    if (map->canChangeDir(ghostTileX, ghostTileY, Map::UP)) whichDir.push(0);
-                    if (map->canChangeDir(ghostTileX, ghostTileY, Map::DOWN)) whichDir.push(2);
-                    if (map->canChangeDir(ghostTileX, ghostTileY, ghostOldDir)) whichDir.push(ghostOldDir);
+                    if (_map->canChangeDir(ghostTileX, ghostTileY, Map::UP)) movableDirs.push(0);
+                    if (_map->canChangeDir(ghostTileX, ghostTileY, Map::DOWN)) movableDirs.push(2);
+                    if (_map->canChangeDir(ghostTileX, ghostTileY, ghostOldDir)) movableDirs.push(ghostOldDir);
                 }
                 else {
-                    if (map->canChangeDir(ghostTileX, ghostTileY, Map::LEFT)) whichDir.push(3);
-                    if (map->canChangeDir(ghostTileX, ghostTileY, Map::RIGHT)) whichDir.push(1);
-                    if (map->canChangeDir(ghostTileX, ghostTileY, ghostOldDir)) whichDir.push(ghostOldDir);
+                    if (_map->canChangeDir(ghostTileX, ghostTileY, Map::LEFT)) movableDirs.push(3);
+                    if (_map->canChangeDir(ghostTileX, ghostTileY, Map::RIGHT)) movableDirs.push(1);
+                    if (_map->canChangeDir(ghostTileX, ghostTileY, ghostOldDir)) movableDirs.push(ghostOldDir);
                 }
-                int dir = rand() % (int) whichDir.size() + 1;
-                while (dir > 1) whichDir.pop(), --dir;
-                ghost->setDir(whichDir.top());
-                while (!whichDir.empty()) whichDir.pop();
+                int dir = rand() % (int) movableDirs.size() + 1;
+                while (dir > 1) movableDirs.pop(), --dir;
+                ghost->setDir(movableDirs.top());
+                while (!movableDirs.empty()) movableDirs.pop();
             }
             else {
                 int distanceUP, distanceDOWN, distanceLEFT, distanceRIGHT;
                 distanceUP = distanceDOWN = distanceLEFT = distanceRIGHT = __INT32_MAX__;
 
-                if (map->canChangeDir(ghostTileX, ghostTileY, Map::UP))
-                    distanceUP = map->getDist(II(ghostTileX, ghostTileY - 1), II(ghostNextTileX, ghostNextTileY), Map::UP);
+                if (_map->canChangeDir(ghostTileX, ghostTileY, Map::UP))
+                    distanceUP = _map->getDist(II(ghostTileX, ghostTileY - 1), II(ghostNextTileX, ghostNextTileY), Map::UP);
 
-                if (map->canChangeDir(ghostTileX, ghostTileY, Map::DOWN))
-                    distanceDOWN = map->getDist(II(ghostTileX, ghostTileY + 1), II(ghostNextTileX, ghostNextTileY), Map::DOWN);
+                if (_map->canChangeDir(ghostTileX, ghostTileY, Map::DOWN))
+                    distanceDOWN = _map->getDist(II(ghostTileX, ghostTileY + 1), II(ghostNextTileX, ghostNextTileY), Map::DOWN);
 
-                if (map->canChangeDir(ghostTileX, ghostTileY, Map::LEFT))
-                    distanceLEFT = map->getDist(II(ghostTileX - 1, ghostTileY), II(ghostNextTileX, ghostNextTileY), Map::LEFT);
+                if (_map->canChangeDir(ghostTileX, ghostTileY, Map::LEFT))
+                    distanceLEFT = _map->getDist(II(ghostTileX - 1, ghostTileY), II(ghostNextTileX, ghostNextTileY), Map::LEFT);
 
-                if (map->canChangeDir(ghostTileX, ghostTileY, Map::RIGHT))
-                    distanceRIGHT = map->getDist(II(ghostTileX + 1, ghostTileY), II(ghostNextTileX, ghostNextTileY), Map::RIGHT);
+                if (_map->canChangeDir(ghostTileX, ghostTileY, Map::RIGHT))
+                    distanceRIGHT = _map->getDist(II(ghostTileX + 1, ghostTileY), II(ghostNextTileX, ghostNextTileY), Map::RIGHT);
 
             int distanceMIN;
                 if (ghostOldDir == Map::UP) {
@@ -437,10 +428,10 @@ void Engine::ghostMove(Ghost* &ghost) {
                 }
             }
         }
-        if (map->canChangeDir(ghostTileX, ghostTileY, ghost->getGhostDir())) ghost->moving();
+        if (_map->canChangeDir(ghostTileX, ghostTileY, ghost->getGhostDir())) ghost->moving();
     }
     else {
-        if (map->canChangeDir(ghostTileX, ghostTileY, ghost->getGhostDir())) ghost->moving();
+        if (_map->canChangeDir(ghostTileX, ghostTileY, ghost->getGhostDir())) ghost->moving();
         else {
             if (ghostTileX * 16 == ghostPosX && ghostTileY * 16 != ghostPosY && ghost->getGhostDir() % 2 == 0) ghost->moving();
             else if (ghostTileY * 16 == ghostPosY && ghostTileX * 16 != ghostPosX && ghost->getGhostDir() % 2 == 1) ghost->moving();
@@ -473,7 +464,7 @@ void Engine::pacmanMeetGhost(Ghost* &ghost) {
             pacman->setDead(true, 1);
             gameManager->lostALife();
             audioManager->insertPlayList(AudioManager::DEAD);
-            timeManager->pauseTick(true);
+            timeManager->pauseTime(true);
         }
     }
 }

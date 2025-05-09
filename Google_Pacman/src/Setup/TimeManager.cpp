@@ -1,16 +1,15 @@
 #include "TimeManager.h"
 
 TimeManager::TimeManager() {
-    lastTick = SDL_GetTicks();
-    FlastTick = GlastTick = SDL_GetTicks();
-    mode.push( CID(CHASING_MODE, oo) );
-    mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-    mode.push( CID(CHASING_MODE, CHASING_TIME) );
-    mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-    mode.push( CID(CHASING_MODE, CHASING_TIME) );
-    mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-    mode.push( CID(CHASING_MODE, CHASING_TIME) );
-    mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
+    lastTime = SDL_GetTicks();
+    mode.push( GhostModeState(CHASING_MODE, oo) );
+    mode.push( GhostModeState(SCATTERING_MODE, SCATTERING_TIME) );
+    mode.push( GhostModeState(CHASING_MODE, CHASING_TIME) );
+    mode.push( GhostModeState(SCATTERING_MODE, SCATTERING_TIME) );
+    mode.push( GhostModeState(CHASING_MODE, CHASING_TIME) );
+    mode.push( GhostModeState(SCATTERING_MODE, SCATTERING_TIME) );
+    mode.push( GhostModeState(CHASING_MODE, CHASING_TIME) );
+    mode.push( GhostModeState(SCATTERING_MODE, SCATTERING_TIME) );
 }
 
 bool TimeManager::isScatteringTime() const {
@@ -21,40 +20,40 @@ void TimeManager::setFrightenTime() {
     lastStatus = mode.top().first;
     mode.pop();
     if (lastStatus == CHASING_MODE)
-        mode.push( CID(CHASING_MODE, CHASING_TIME - (SDL_GetTicks() - lastTick)) );
+        mode.push( GhostModeState(CHASING_MODE, CHASING_TIME - (SDL_GetTicks() - lastTime)) );
     else if (lastStatus == SCATTERING_MODE)
-        mode.push( CID(SCATTERING_MODE, SCATTERING_TIME - (SDL_GetTicks() - lastTick)) );
-    mode.push( CID(FRIGHTEN_MODE, FRIGHTEN_TIME) );
-    lastTick = SDL_GetTicks();
+        mode.push( GhostModeState(SCATTERING_MODE, SCATTERING_TIME - (SDL_GetTicks() - lastTime)) );
+    mode.push( GhostModeState(FRIGHTEN_MODE, FRIGHTEN_TIME) );
+    lastTime = SDL_GetTicks();
 }
 
 
-void TimeManager::resetTick(const int level) {
+void TimeManager::reset(const int level) {
     while (!mode.empty()) mode.pop();
 
-    mode.push( CID(CHASING_MODE, oo) );
-    mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-    mode.push( CID(CHASING_MODE, CHASING_TIME) );
-    mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-    mode.push( CID(CHASING_MODE, CHASING_TIME) );
-    mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-    mode.push( CID(CHASING_MODE, CHASING_TIME) );
-    mode.push( CID(SCATTERING_MODE, SCATTERING_TIME) );
-    FRIGHTEN_TIME = 10.0;
+    mode.push( GhostModeState(CHASING_MODE, oo) );
+    mode.push( GhostModeState(SCATTERING_MODE, SCATTERING_TIME) );
+    mode.push( GhostModeState(CHASING_MODE, CHASING_TIME) );
+    mode.push( GhostModeState(SCATTERING_MODE, SCATTERING_TIME) );
+    mode.push( GhostModeState(CHASING_MODE, CHASING_TIME) );
+    mode.push( GhostModeState(SCATTERING_MODE, SCATTERING_TIME) );
+    mode.push( GhostModeState(CHASING_MODE, CHASING_TIME) );
+    mode.push( GhostModeState(SCATTERING_MODE, SCATTERING_TIME) );
+    FRIGHTEN_TIME = 7.0;
 
-    lastTick = SDL_GetTicks();
+    lastTime = SDL_GetTicks();
 }
 
 void TimeManager::updateStatus() {
     if (pause == true) {
-        lastTick = SDL_GetTicks();
+        lastTime = SDL_GetTicks();
         return;
     }
-    double timePass = (SDL_GetTicks() - lastTick) / 1000.0;
+    double timePass = (SDL_GetTicks() - lastTime) / 1000.0;
 
     if (!mode.empty()) {
         if (timePass > mode.top().second && mode.top().second != oo) {
-            mode.pop(); lastTick = SDL_GetTicks();
+            mode.pop(); lastTime = SDL_GetTicks();
         }
     }
 }
@@ -66,7 +65,7 @@ void TimeManager::stablizeFPS() {
     lastFrame = SDL_GetTicks();
 }
 
-bool TimeManager::pauseTick(const bool status) {
+bool TimeManager::pauseTime(const bool status) {
     return pause = status;
 }
 
@@ -75,5 +74,5 @@ bool TimeManager::isFrightenTime() const {
 }
 
 double TimeManager::remainFrightenTime() const {
-    return FRIGHTEN_TIME - (SDL_GetTicks() - lastTick) / 1000.0;
+    return FRIGHTEN_TIME - (SDL_GetTicks() - lastTime) / 1000.0;
 }

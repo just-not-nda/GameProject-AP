@@ -2,15 +2,10 @@
 1746596693 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\main.cpp
 	"GameCore.h"
 
-1746716036 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\engine.cpp
+1746808194 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\engine.cpp
 	"Engine.h"
-	<iostream>
-	<utility>
-	<limits>
-	<random>
-	<time.h>
 
-1746634617 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\engine.h
+1746808488 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\engine.h
 	<SDL.h>
 	<SDL_mixer.h>
 	"Map.h"
@@ -20,6 +15,10 @@
 	"TimeManager.h"
 	"GameManager.h"
 	"AudioManager.h"
+	<utility>
+	<limits>
+	<random>
+	<time.h>
 
 1746639087 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\map\map.cpp
 	"Map.h"
@@ -31,39 +30,39 @@
 	<algorithm>
 	"GetError.h"
 
-1746600591 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\character.cpp
+1746808194 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\character.cpp
 	"Character.h"
 	<iostream>
 	<cmath>
 
-1746634617 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\character.h
+1746808194 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\character.h
 
-1746598295 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\texture.h
+1746803324 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\texture.h
 	<SDL.h>
 	<SDL_image.h>
-	"../Setup/GetError.h"
+	"GetError.h"
 
-1745943253 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\geterror.h
+1746803324 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\geterror.h
 	<iostream>
 	<string>
 
 1746598295 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\texture.cpp
 	"Texture.h"
 
-1746597829 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\pacman.cpp
+1746808194 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\pacman.cpp
 	"Pacman.h"
-	<algorithm>
 
-1746619913 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\pacman.h
+1746807503 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\pacman.h
 	"Character.h"
 	<stack>
+	<algorithm>
 
-1746634617 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\ghost.cpp
+1746808194 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\ghost.cpp
 	"Ghost.h"
-	<random>
 
-1746597869 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\ghost.h
+1746806684 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\character\ghost.h
 	"Character.h"
+	<random>
 
 1746462647 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\audio.cpp
 	"Audio.h"
@@ -93,15 +92,15 @@
 	"Button.h"
 	"GetError.h"
 
-1746716024 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\gamemanager.cpp
+1746806018 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\gamemanager.cpp
 	"GameManager.h"
-	<string>
 
-1746716024 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\gamemanager.h
+1746797224 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\core\gamemanager.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
 	<vector>
+	<string>
 	"Ghost.h"
 	"TextManager.h"
 	"Button.h"
@@ -125,7 +124,7 @@
 	<string>
 	"TextManager.h"
 
-1746553596 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\textmanager.h
+1746803324 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\textmanager.h
 	<SDL_ttf.h>
 	<string>
 
@@ -141,13 +140,13 @@
 	"GetError.h"
 	"Button.h"
 
-1746553596 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\textmanager.cpp
+1746803324 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\textmanager.cpp
 	"TextManager.h"
 
-1746635331 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\timemanager.cpp
+1746802264 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\timemanager.cpp
 	"TimeManager.h"
 
-1746635294 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\timemanager.h
+1746802264 c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\timemanager.h
 	<SDL.h>
 	<stack>
 
@@ -156,6 +155,6 @@
 	<vector>
 	"GetError.h"
 
-1746597914 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\audiomanager.cpp
+1746803751 source:c:\users\laptop\documents\github\gameproject-ap\google_pacman\src\setup\audiomanager.cpp
 	"AudioManager.h"
 

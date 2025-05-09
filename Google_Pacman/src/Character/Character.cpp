@@ -52,7 +52,7 @@ void Character::setDead(bool status, int id) {
     scrPosY = tileY * 16;
 }
 
-void Character::move() {
+void Character::go() {
     scrPosX += velX;
     scrPosY += velY;
 

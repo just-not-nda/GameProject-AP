@@ -63,14 +63,22 @@ void AudioManager::loadSound() {
     soundEffect[ GHOST_GO_HOME ] = Mix_LoadWAV("assets/Sound/ghost go home.wav");
     soundEffect[ GHOST_TURN_BLUE ] = Mix_LoadWAV("assets/Sound/ghost turn blue.wav");
 
-    for (int i = 0; i < 11; ++i) if (soundEffect == nullptr)
-        Check->Status( Mix_GetError() );
+    for (int i = 0; i < TOTAL_SOUND_EFFECT; i++){
+        if (soundEffect == nullptr)
+            Check->Status( Mix_GetError() );
+    }
 
-    Mix_PlayChannel(1, soundEffect[MOVE_0], -1);            Mix_Pause(1);
-    Mix_PlayChannel(3, soundEffect[EAT_DOT], -1);           Mix_Pause(3);
-    Mix_PlayChannel(5, soundEffect[GHOST_TURN_BLUE], -1);   Mix_Pause(5);
-    Mix_PlayChannel(6, soundEffect[GHOST_GO_HOME], -1);     Mix_Pause(6);
+    Mix_PlayChannel(1, soundEffect[MOVE_0], -1);
+    Mix_Pause(1);
+    Mix_PlayChannel(3, soundEffect[EAT_DOT], -1);
+    Mix_Pause(3);
+    Mix_PlayChannel(5, soundEffect[GHOST_TURN_BLUE], -1);
+    Mix_Pause(5);
+    Mix_PlayChannel(6, soundEffect[GHOST_GO_HOME], -1);
+    Mix_Pause(6);
     Mix_Pause(8);
+
+    Check->Status("Sound is loaded");
 }
 
 void AudioManager::playSound() {

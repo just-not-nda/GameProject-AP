@@ -22,7 +22,7 @@ class Character
         Character(int tileX, int tileY, int velX = 0, int velY = 0);
         ~Character() {}
 
-        void move();
+        void go();
         bool isDead() const;
         int getPosX() const;
         int getPosY() const;

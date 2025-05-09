@@ -15,7 +15,7 @@ class TextManager {
         SDL_Texture* textTexture;
         SDL_Surface* textSurface;
     public:
-        const string FONT_NAME = "assets/Poppins-Bold.ttf";
+        const string FONT_FILE = "assets/Poppins-Bold.ttf";
         static const int CENTER = 0;
         static const int LEFT = 1;
 

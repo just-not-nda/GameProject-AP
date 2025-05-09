@@ -1,10 +1,8 @@
 #include "GameManager.h"
-#include <string>
-using namespace std;
 
 GameManager::GameManager(SDL_Renderer* &renderer) {
     level = 1;
-    life = 1;
+    life = 3;
     eatenDots = 0;
     eatenGhost = -1;
     scores = 0;
@@ -16,11 +14,11 @@ GameManager::GameManager(SDL_Renderer* &renderer) {
     liveText = new TextManager(28);
     liveText->loadRenderText(renderer, "LIFE: ", {255, 255, 255, 255});
     scoreText = new TextManager(45);
-    scoreText->loadRenderText(renderer, "SCORE: 0", {255, 255, 255, 255});
+    scoreText->loadRenderText(renderer, "0", {255, 255, 255, 255});
     levelText = new TextManager(28);
     levelText->loadRenderText(renderer, "LEVEL: 1", {255, 255, 255, 255});
 
-    egBoard = loadImage(renderer, "assets/GameOver.png");
+    gameOver = loadImage(renderer, "assets/GameOver.png");
     againBut = new Button(280, 40, 325, 280); againBut->loadButton(renderer, "Play again");
     againBut->setStatus(Button::BUTTON_IN);
     quitBut  = new Button(280, 40, 325, 330); quitBut ->loadButton(renderer, "Quit");
@@ -34,8 +32,6 @@ GameManager::~GameManager() {
     liveText = nullptr;
     delete scoreText;
     scoreText = nullptr;
-    delete egBoard;
-    egBoard = nullptr;
 }
 
 SDL_Texture* GameManager::loadImage(SDL_Renderer* &renderer, const string imagePath) {
@@ -47,7 +43,7 @@ SDL_Texture* GameManager::loadImage(SDL_Renderer* &renderer, const string imageP
 
 void GameManager::reset() {
     level = 1;
-    life = 1;
+    life = 3;
     scores = 0;
     eatenDots = 0;
     eatenGhost = -1;
@@ -118,9 +114,9 @@ int GameManager::getLevel() const {
 }
 
 void GameManager::handleGhostPos(Ghost* &pinky, Ghost* &inky, Ghost* &clyde) {
-    if (pinky->isInCage() && eatenDots >= PINKY_COIN_LIMIT) pinky->respawn(Ghost::GHOST_START_TILE_X, Ghost::GHOST_START_TILE_Y, false);
-    if (inky ->isInCage() && eatenDots >=  INKY_COIN_LIMIT) inky ->respawn(Ghost::GHOST_START_TILE_X, Ghost::GHOST_START_TILE_Y, false);
-    if (clyde->isInCage() && eatenDots >= CLYDE_COIN_LIMIT) clyde->respawn(Ghost::GHOST_START_TILE_X, Ghost::GHOST_START_TILE_Y, false);
+    if (pinky->isAtHome() && eatenDots >= PINKY_COIN_LIMIT) pinky->respawn(Ghost::GHOST_START_TILE_X, Ghost::GHOST_START_TILE_Y, false);
+    if (inky ->isAtHome() && eatenDots >=  INKY_COIN_LIMIT) inky ->respawn(Ghost::GHOST_START_TILE_X, Ghost::GHOST_START_TILE_Y, false);
+    if (clyde->isAtHome() && eatenDots >= CLYDE_COIN_LIMIT) clyde->respawn(Ghost::GHOST_START_TILE_X, Ghost::GHOST_START_TILE_Y, false);
 }
 
 void GameManager::renderHUD(SDL_Renderer* &renderer) {
@@ -154,7 +150,7 @@ void GameManager::handleEGBoard(SDL_Event &e){
 
 void GameManager::runEGBoard(SDL_Renderer* &renderer){
     SDL_Rect dsRect = {0, 0, 930, 475};
-    SDL_RenderCopy(renderer, egBoard, nullptr, &dsRect);
+    SDL_RenderCopy(renderer, gameOver, nullptr, &dsRect);
     againBut->renderButton(renderer);
     quitBut ->renderButton(renderer);
 

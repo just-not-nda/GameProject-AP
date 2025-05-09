@@ -1,48 +1,58 @@
 #include "Pacman.h"
-#include <algorithm>
 
-typedef pair<int, std::pair<int, int> > IP;
+typedef pair<int, pair<int, int> > TurnID;
 
 Pacman::Pacman() : Character(PACMAN_START_TILE_X, PACMAN_START_TILE_Y) {
     while (!Direction.empty()) Direction.pop();
-    while (!Special.empty())   Special.pop();
+    while (!turnPoints.empty())   turnPoints.pop();
 }
 
-void Pacman::pushtoStack(int newDir) {
+void Pacman::updateDir(int newDir) {
     if (!Direction.empty()) Direction.pop();
     Direction.push(newDir);
 }
 
-void Pacman::pushSpecialStack(int newDir, std::pair<int, int> nextCross) {
-    if (!Special.empty()) {
-        if (Special.top().first != newDir) {
-            Special.pop();
-            Special.push( IP(newDir, nextCross) );
+void Pacman::addTurn(int newDir, pair<int, int> nextCross) {
+    if (!turnPoints.empty()) {
+        if (turnPoints.top().first != newDir) {
+            turnPoints.pop();
+            turnPoints.push( TurnID(newDir, nextCross) );
         }
     }
-    else Special.push( IP(newDir,nextCross) );
+    else turnPoints.push( TurnID(newDir,nextCross) );
 }
 
 void Pacman::moving() {
     if (!Direction.empty()) {
-        int velX = 0, velY = 0, dir = -1;
+        int veloX = 0, veloY = 0, dir = -1;
 
         switch (Direction.top()) {
-            case UP   : velX = 0; velY = -pacmanVelocity; dir = 0; break;
-            case DOWN : velX = 0; velY =  pacmanVelocity; dir = 2; break;
-            case LEFT : velX = -pacmanVelocity; velY = 0; dir = 3; break;
-            case RIGHT: velX =  pacmanVelocity; velY = 0; dir = 1; break;
+            case UP   : {
+                veloX = 0;
+                veloY = -pacmanVelocity;
+                dir = 0; break; }
+            case DOWN : {
+                veloX = 0;
+                veloY =  pacmanVelocity;
+                dir = 2; break; }
+            case LEFT : {
+                veloX = -pacmanVelocity;
+                veloY = 0;
+                dir = 3; break; }
+            case RIGHT: {
+                veloX =  pacmanVelocity;
+                veloY = 0;
+                dir = 1; break; }
         }
-
-        changeVelocityDir(velX, velY, dir);
-        move();
+        changeVelocityDir(veloX, veloY, dir);
+        go();
     }
 }
 
 void Pacman::turn() {
     if (!Direction.empty()) stopmoving();
-    Direction.push(Special.top().first);
-    Special.pop();
+    Direction.push(turnPoints.top().first);
+    turnPoints.pop();
     moving();
 }
 
@@ -50,7 +60,7 @@ void Pacman::stopmoving() {
     while (!Direction.empty()) Direction.pop();
 }
 
-void Pacman::eraseSpecial() {
-    while (!Special.empty()) Special.pop();
+void Pacman::eraseTurnPoints() {
+    while (!turnPoints.empty()) turnPoints.pop();
 }
 

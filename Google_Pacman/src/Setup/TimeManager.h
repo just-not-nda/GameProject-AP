@@ -7,20 +7,18 @@
 #include <stack>
 using namespace std;
 
-typedef pair<const int, double> CID;
+typedef pair<const int, double> GhostModeState;
 
 class TimeManager {
     private:
-        Uint32 lastTick;
-        Uint32 FlastTick;
-        Uint32 GlastTick;
+        Uint32 lastTime;
         Uint32 lastFrame = 0;
 
-        stack<CID> mode;
+        stack<GhostModeState> mode;
 
         int lastStatus;
         bool pause;
-        double FRIGHTEN_TIME = 10.0;
+        double FRIGHTEN_TIME = 7.0;
         double SCATTERING_TIME = 8.0;
         double CHASING_TIME = 20.0;
     public:
@@ -36,10 +34,10 @@ class TimeManager {
         bool isFrightenTime() const;
         bool isScatteringTime() const;
         void setFrightenTime();
-        void resetTick(const int level);
+        void reset(const int level);
         void updateStatus();
         void stablizeFPS();
-        bool pauseTick(const bool status);
+        bool pauseTime(const bool status);
 };
 
 #endif // TIMEMANAGER_H_

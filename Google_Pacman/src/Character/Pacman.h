@@ -5,13 +5,14 @@
 
 #include "Character.h"
 #include <stack>
+#include <algorithm>
 using namespace std;
 
 class Pacman : public Character
 {
     private:
         stack<int> Direction;
-        stack< pair<int, pair<int, int> > > Special;
+        stack< pair<int, pair<int, int> > > turnPoints;
 
     public:
         static const int pacmanVelocity = 2;
@@ -21,32 +22,26 @@ class Pacman : public Character
         Pacman();
         ~Pacman() {
             while (!Direction.empty()) Direction.pop();
-            while (!Special.empty()) Special.pop();
+            while (!turnPoints.empty()) turnPoints.pop();
         }
         bool emptyDirStack() {
             return Direction.empty();
         }
-        bool emptySpecial() {
-            return Special.empty();
+        bool emptyTurnPoints() {
+            return turnPoints.empty();
         }
-        void pushtoStack(int newDir);
-        void pushSpecialStack(int newDir, pair<int, int> nextCross);
+        void updateDir(int newDir);
+        void addTurn(int newDir, pair<int, int> nextCross);
         int getDir() const {
             return Direction.top();
         }
-        pair<int, int> getSpecial() {
-            return Special.top().second;
+        pair<int, int> getTurnPoints() {
+            return turnPoints.top().second;
         }
         void moving();
         void stopmoving();
         void turn();
-        void eraseSpecial();
-        void respawn() {
-            resetCharacterTile(PACMAN_START_TILE_X, PACMAN_START_TILE_Y);
-            while (!Direction.empty()) Direction.pop();
-            while (!Special.empty())   Special.pop();
-        }
-
+        void eraseTurnPoints();
 };
 
 #endif // _PACMAN_H_

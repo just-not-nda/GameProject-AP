@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef GETERROR_H
 #define GETERROR_H
 

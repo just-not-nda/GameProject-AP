@@ -7,9 +7,11 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <vector>
+#include <string>
 #include "Ghost.h"
 #include "TextManager.h"
 #include "Button.h"
+using namespace std;
 
 class GameManager {
     private:
@@ -31,7 +33,7 @@ class GameManager {
         TextManager* liveText;
         TextManager* scoreText;
 
-        SDL_Texture* egBoard = nullptr;
+        SDL_Texture* gameOver;
         Button* againBut;
         Button* quitBut;
     protected:
