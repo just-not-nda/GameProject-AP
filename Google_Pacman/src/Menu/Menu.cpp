@@ -69,7 +69,7 @@ void Menu::handleEvent(SDL_Event &e, SDL_Renderer* &renderer) {
         else if (e.key.keysym.sym == SDLK_RETURN) {
                 menuButton[buttonID]->setStatus(Button::BUTTON_IN);
                 string menuText = menuButton[buttonID]->getText();
-                if (menuText == "New Game") menuStatus = PLAY_BUTTON_PRESSED;
+                if (menuText == "New Game" || menuText == "Start") menuStatus = PLAY_BUTTON_PRESSED;
                 else if (menuText == "Resume") menuStatus = RESUME;
                 else if (menuText == "Exit") menuStatus = EXIT_BUTTON_PRESSED;
                 else if (menuText == "Exit to Start Menu") menuStatus = EXIT_BUTTON_PRESSED;

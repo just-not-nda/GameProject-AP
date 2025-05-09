@@ -43,7 +43,7 @@ void Engine::newGame() {
     audioManager->insertPlayList(AudioManager::START);
     timeManager->reset(gameManager->getLevel());
     timeManager->pauseTime(true);
-    runningEGBoard = false;
+    runGameOver = false;
 }
 
 void Engine::respawnObject() {
@@ -66,7 +66,7 @@ void Engine::handleEvent(SDL_Event &e) {
     if (Mix_Playing(2) || Mix_Playing(4)) return;
 
     if (pacman->isDead()) {
-        if (runningEGBoard) gameManager->handleEGBoard(e);
+        if (runGameOver) gameManager->handleEGBoard(e);
         return;
     }
     if (e.type == SDL_KEYDOWN) {
@@ -150,7 +150,7 @@ void Engine::render(SDL_Renderer* &renderer)
         }
     }
 
-    if (!runningEGBoard) {
+    if (!runGameOver) {
         int dir = -1;
         if (!pacman->emptyDirStack()) dir = pacman->getDir();
         if (!pacman->isDead()) {
@@ -167,13 +167,13 @@ void Engine::render(SDL_Renderer* &renderer)
             if (texture->pacmanIsDead()) {
                 if (gameManager->getRemainLife() > 0) respawnObject();
                 else {
-                    runningEGBoard = true;
+                    runGameOver = true;
                 }
                     }
             texture->renderPacman(renderer, pacman->getPosX(), pacman->getPosY(), Texture::PACMAN_DEAD_STATE);
         }
         else texture->renderPacman(renderer, pacman->getPosX(), pacman->getPosY(), dir);
-        if (waitTime > 0) {
+        if (delayTime > 0) {
             dstRect = {315, 108, 300, 200};
             SDL_RenderCopy(renderer, levelUp, nullptr, &dstRect);
         }
@@ -183,7 +183,7 @@ void Engine::render(SDL_Renderer* &renderer)
         audioManager->playSound();
 
     }
-    if (runningEGBoard) gameManager->runEGBoard(renderer);
+    if (runGameOver) gameManager->runEGBoard(renderer);
     else gameManager->renderHUD(renderer);
 }
 
@@ -191,7 +191,7 @@ void Engine::render(SDL_Renderer* &renderer)
 void Engine::loop(bool &exitToMenu)
 {
     if (gameManager->clearAllDots()) {
-        if (waitTime > 0) --waitTime;
+        if (delayTime > 0) --delayTime;
         else {
             gameManager->levelUp();
             timeManager->reset(gameManager->getLevel());
@@ -205,7 +205,7 @@ void Engine::loop(bool &exitToMenu)
         return;
     }
     if (pacman->isDead()) {
-        if (runningEGBoard) {
+        if (runGameOver) {
             switch (gameManager->getPlayerDecision()) {
                 case GameManager::AGAIN:
                     newGame();
@@ -338,7 +338,7 @@ void Engine::loop(bool &exitToMenu)
 
     if (gameManager->clearAllDots()) {
         audioManager->insertPlayList(AudioManager::WINNING);
-        waitTime = 100;
+        delayTime = 100;
     }
 }
 

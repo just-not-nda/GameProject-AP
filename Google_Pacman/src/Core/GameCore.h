@@ -27,7 +27,7 @@ class GameCore {
         static const int SCREEN_WIDTH = 930;
         static const int SCREEN_HEIGHT = 475;
         const string WINDOW_TITTLE = "Google Pacman";
-        vector<string> startMenuButtonText = {"New Game", "Sound: ON", "Exit"};
+        vector<string> startMenuButtonText = {"Start", "Sound: ON", "Exit"};
 
         GameCore();
 

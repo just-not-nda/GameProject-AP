@@ -31,8 +31,8 @@ private:
     AudioManager* audioManager;
     SDL_Texture* levelUp;
     SDL_Texture* ready;
-    bool runningEGBoard = false;
-    int waitTime = 0;
+    bool runGameOver = false;
+    int delayTime = 0;
 protected:
         void respawnObject();
         void ghostGo(Ghost* &ghost);
