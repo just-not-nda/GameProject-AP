@@ -30,7 +30,7 @@ Người chơi cần di chuyển Pacman ăn dot lấy điểm và thoát khỏi 
 - App Piskel dùng để vẽ nhân vật, map, v.v...
 
 ## 5. Ngưỡng điểm yêu cầu:
-### Em cho rằng mình đạt được mức điểm 8.5 vì những lý do sau:
+### Em cho rằng mình đạt được mức điểm 8.5 vì những lý do sau đây:
 - Có đồ họa
-- Sử dụng âm thanh, chữ
+- Sử dụng âm thanh, chữ, hình ảnh
 - Thuật toán game 
