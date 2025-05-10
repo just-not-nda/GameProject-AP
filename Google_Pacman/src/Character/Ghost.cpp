@@ -50,10 +50,10 @@ bool Ghost::isFrighten() {
     return frighten;
 }
 
-void Ghost::setTargetTile(int tilX, int tilY, int _speedMode) {
-    this->speedMode = _speedMode;
-    nextTileX = tilX;
-    nextTileY = tilY;
+void Ghost::setTargetTile(int tileX, int tileY, int speedMode) {
+    this->speedMode = speedMode;
+    nextTileX = tileX;
+    nextTileY = tileY;
 }
 
 void Ghost::moving() {

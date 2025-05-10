@@ -24,7 +24,7 @@ class Pacman : public Character
             while (!Direction.empty()) Direction.pop();
             while (!turnPoints.empty()) turnPoints.pop();
         }
-        bool emptyDirStack() {
+        bool emptyDir() {
             return Direction.empty();
         }
         bool emptyTurnPoints() {

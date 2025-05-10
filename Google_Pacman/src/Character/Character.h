@@ -6,10 +6,8 @@
 class Character
 {
     private:
-        int scrPosX, scrPosY;
-        int velX = 0, velY = 0;
-        int tileX, tileY;
-        int dir;
+        int scrPosX, scrPosY, tileX, tileY, dir;
+        int veloX = 0, veloY = 0;
         bool dead;
     public:
         static const int UP = 0;

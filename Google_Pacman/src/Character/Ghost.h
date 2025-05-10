@@ -45,7 +45,7 @@ class Ghost : public Character {
         void setScattering(const bool status);
         bool isScattering();
         bool isFrighten();
-        void setTargetTile(int tilX, int tilY, int _speedMode = 1);
+        void setTargetTile(int tileX, int tileY, int speedMode = 1);
         void moving();
         void respawn(const int tileX, const int tileY, const bool atHome);
         bool isAtHome() const;

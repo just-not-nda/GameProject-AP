@@ -21,8 +21,8 @@ class GameCore {
         GameState* gameState = nullptr;
 
         GetError* Check = new GetError("GameCore");
-        bool Running = false;
-        bool runningMenu = false;
+        bool running = false;
+        bool runMenu = false;
     public:
         static const int SCREEN_WIDTH = 930;
         static const int SCREEN_HEIGHT = 475;

@@ -5,7 +5,7 @@ GameCore::GameCore() {
     renderer = nullptr;
     gameState = nullptr;
     startMenu = nullptr;
-    runningMenu = false;
+    runMenu = false;
 }
 
 GameCore::~GameCore() {
@@ -33,7 +33,7 @@ void GameCore::init() {
     else {
         window = SDL_CreateWindow(WINDOW_TITTLE.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
         Check->Status("Window is opened");
-        Running = true;
+        running = true;
 
         if (window == nullptr) {
             Check->Status( SDL_GetError() );
@@ -73,43 +73,43 @@ void GameCore::run() {
     startMenu->changeRunStatus();
 
     SDL_Event e;
-    runningMenu = true;
+    runMenu = true;
     bool startGame = false;
     gameState = new GameState();
 
-    while (Running) {
+    while (running) {
 
         while (SDL_PollEvent(&e) != 0) {
-            if (e.type == SDL_QUIT) Running = false;
+            if (e.type == SDL_QUIT) running = false;
             else {
-                if (runningMenu) {
+                if (runMenu) {
                     startMenu->handleEvent(e, renderer);
                     switch (startMenu->getStatus()) {
                         case Menu::PLAY_BUTTON_PRESSED:
-                            runningMenu = false; break;
+                            runMenu = false; break;
                         case Menu::EXIT_BUTTON_PRESSED:
-                            Running = false; break;
+                            running = false; break;
                     }
                 }
                 else {
-                    gameState->handleEvent(e, renderer, runningMenu);
-                    if (runningMenu) startMenu->reOpen();
+                    gameState->handleEvent(e, renderer, runMenu);
+                    if (runMenu) startMenu->reOpen();
                 }
             }
         }
-        if (!runningMenu) {
+        if (!runMenu) {
             if (!startGame) {
                 gameState->newGame(renderer);
                 startGame = true;
             }
-            gameState->runGame(runningMenu);
-            if (runningMenu) startMenu->reOpen(), startGame = false;
+            gameState->runGame(runMenu);
+            if (runMenu) startMenu->reOpen(), startGame = false;
         }
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
-        if (runningMenu)
+        if (runMenu)
             startMenu->render(renderer);
         else gameState->render(renderer);
 

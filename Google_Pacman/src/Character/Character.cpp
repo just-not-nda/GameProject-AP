@@ -3,11 +3,11 @@
 #include <cmath>
 
 
-Character::Character(int tileX, int tileY, int velX, int velY) {
+Character::Character(int tileX, int tileY, int veloX, int veloY) {
     this->tileX = tileX;
     this->tileY = tileY;
-    if (velX != 0) this->velX = velX;
-    if (velY != 0) this->velY = velY;
+    if (veloX != 0) this->veloX = veloX;
+    if (veloY != 0) this->veloY = veloY;
 
     this->scrPosX = tileX * 16 + 8;
     this->scrPosY = tileY * 16;
@@ -39,9 +39,9 @@ void Character::reTilePos() {
     scrPosY = tileY * 16;
 }
 
-void Character::changeVelocityDir(int velX, int velY, int dir) {
-    this->velX = velX;
-    this->velY = velY;
+void Character::changeVelocityDir(int veloX, int veloY, int dir) {
+    this->veloX = veloX;
+    this->veloY = veloY;
     this->dir = dir;
 }
 
@@ -53,8 +53,8 @@ void Character::setDead(bool status, int id) {
 }
 
 void Character::go() {
-    scrPosX += velX;
-    scrPosY += velY;
+    scrPosX += veloX;
+    scrPosY += veloY;
 
     if (scrPosX % 16 == 0) tileX = scrPosX / 16;
     else tileX = (scrPosX + 8) / 16;
@@ -80,7 +80,7 @@ void Character::resetCharacterTile(const int tileX, const int tileY) {
     this->tileX = tileX;
     this->tileY = tileY;
     dead = false;
-    velX = velY = 0;
+    veloX = veloY = 0;
     scrPosX = tileX * 16;
     scrPosY = tileY * 16;
 }

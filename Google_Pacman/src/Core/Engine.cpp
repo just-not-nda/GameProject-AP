@@ -80,7 +80,7 @@ void Engine::handleEvent(SDL_Event &e) {
             int pacmanPosX  = pacman->getPosX();
             int pacmanPosY  = pacman->getPosY();
 
-            if (!pacman->emptyDirStack())
+            if (!pacman->emptyDir())
                 lastDir = pacman->getDir();
 
             if (e.key.keysym.sym == SDLK_UP)
@@ -133,8 +133,6 @@ void Engine::handleEvent(SDL_Event &e) {
     }
 }
 
-
-
 void Engine::render(SDL_Renderer* &renderer)
 {
     timeManager->stablizeFPS();
@@ -152,7 +150,7 @@ void Engine::render(SDL_Renderer* &renderer)
 
     if (!runGameOver) {
         int dir = -1;
-        if (!pacman->emptyDirStack()) dir = pacman->getDir();
+        if (!pacman->emptyDir()) dir = pacman->getDir();
         if (!pacman->isDead()) {
             renderGhost(renderer, blinky, Texture::BLINKY);
             renderGhost(renderer, pinky , Texture::PINKY );
@@ -222,7 +220,7 @@ void Engine::loop(bool &exitToMenu)
     int pacmanPosX = pacman->getPosX();
     int pacmanPosY = pacman->getPosY();
     int lastDir = -1;
-    if (!pacman->emptyDirStack()) lastDir = pacman->getDir();
+    if (!pacman->emptyDir()) lastDir = pacman->getDir();
 
     if (!pacman->isDead() && lastDir != -1) {
         if (pacmanTileX * 16 == pacmanPosX && pacmanTileY * 16 == pacmanPosY) {
@@ -281,7 +279,7 @@ void Engine::loop(bool &exitToMenu)
     pacmanPosX = pacman->getPosX();
     pacmanPosY = pacman->getPosY();
     lastDir = -1;
-    if (!pacman->emptyDirStack()) lastDir = pacman->getDir();
+    if (!pacman->emptyDir()) lastDir = pacman->getDir();
 
     if (!pacman->isDead()) {
         timeManager->pauseTime(false);
