@@ -1,7 +1,6 @@
 #include "Engine.h"
 
-typedef pair<int, int> II;
-typedef pair<int, pair<int, int> > IP;
+typedef pair<int, int> PR;
 
 void Engine::init(SDL_Renderer* &renderer)
 {
@@ -110,9 +109,9 @@ void Engine::handleEvent(SDL_Event &e) {
                     if (lastDir % 2 == 1 && newDir % 2 == 0) {
                         if (pacmanPosY == pacmanTileY * 16) {
                             if (_map->canChangeDir(pacmanTileX, pacmanTileY, newDir)) {
-                                pacman->addTurn(newDir, II(pacmanTileX, pacmanTileY));
+                                pacman->addTurn(newDir, PR(pacmanTileX, pacmanTileY));
                             }
-                            else if (nextCross != II(-1, -1) && !_map->besideCrossIsWall(nextCross, newDir) && abs(pacmanPosX - nextCross.first * 16) <= 32) {
+                            else if (nextCross != PR(-1, -1) && !_map->besideCrossIsWall(nextCross, newDir) && abs(pacmanPosX - nextCross.first * 16) <= 32) {
                                 pacman->addTurn(newDir, nextCross);
                             }
                         }
@@ -120,9 +119,9 @@ void Engine::handleEvent(SDL_Event &e) {
                     else if (lastDir % 2 == 0 && newDir % 2 == 1) {
                         if (pacmanPosX == pacmanTileX * 16) {
                             if (_map->canChangeDir(pacmanTileX, pacmanTileY, newDir)) {
-                                pacman->addTurn(newDir, II(pacmanTileX, pacmanTileY));
+                                pacman->addTurn(newDir, PR(pacmanTileX, pacmanTileY));
                             }
-                            else if (nextCross != II(-1, -1) && !_map->besideCrossIsWall(nextCross, newDir) && abs(pacmanPosY - nextCross.second * 16) <= 32) {
+                            else if (nextCross != PR(-1, -1) && !_map->besideCrossIsWall(nextCross, newDir) && abs(pacmanPosY - nextCross.second * 16) <= 32) {
                                 pacman->addTurn(newDir, nextCross);
                             }
                         }
@@ -225,7 +224,7 @@ void Engine::loop(bool &exitToMenu)
     if (!pacman->isDead() && lastDir != -1) {
         if (pacmanTileX * 16 == pacmanPosX && pacmanTileY * 16 == pacmanPosY) {
             if (_map->iscrossRoad(pacmanTileX, pacmanTileY)) {
-                if (!pacman->emptyTurnPoints() && pacman->getTurnPoints() == II(pacmanTileX, pacmanTileY)) pacman->turn();
+                if (!pacman->emptyTurnPoints() && pacman->getTurnPoints() == PR(pacmanTileX, pacmanTileY)) pacman->turn();
             }
             if (_map->canChangeDir(pacmanTileX, pacmanTileY, pacman->getDir())) pacman->moving();
             else pacman->stopmoving();
@@ -388,16 +387,16 @@ void Engine::ghostGo(Ghost* &ghost) {
                 distanceUP = distanceDOWN = distanceLEFT = distanceRIGHT = __INT32_MAX__;
 
                 if (_map->canChangeDir(ghostTileX, ghostTileY, Map::UP))
-                    distanceUP = _map->getDist(II(ghostTileX, ghostTileY - 1), II(ghostNextTileX, ghostNextTileY), Map::UP);
+                    distanceUP = _map->getDist(PR(ghostTileX, ghostTileY - 1), PR(ghostNextTileX, ghostNextTileY), Map::UP);
 
                 if (_map->canChangeDir(ghostTileX, ghostTileY, Map::DOWN))
-                    distanceDOWN = _map->getDist(II(ghostTileX, ghostTileY + 1), II(ghostNextTileX, ghostNextTileY), Map::DOWN);
+                    distanceDOWN = _map->getDist(PR(ghostTileX, ghostTileY + 1), PR(ghostNextTileX, ghostNextTileY), Map::DOWN);
 
                 if (_map->canChangeDir(ghostTileX, ghostTileY, Map::LEFT))
-                    distanceLEFT = _map->getDist(II(ghostTileX - 1, ghostTileY), II(ghostNextTileX, ghostNextTileY), Map::LEFT);
+                    distanceLEFT = _map->getDist(PR(ghostTileX - 1, ghostTileY), PR(ghostNextTileX, ghostNextTileY), Map::LEFT);
 
                 if (_map->canChangeDir(ghostTileX, ghostTileY, Map::RIGHT))
-                    distanceRIGHT = _map->getDist(II(ghostTileX + 1, ghostTileY), II(ghostNextTileX, ghostNextTileY), Map::RIGHT);
+                    distanceRIGHT = _map->getDist(PR(ghostTileX + 1, ghostTileY), PR(ghostNextTileX, ghostNextTileY), Map::RIGHT);
 
             int distanceMIN;
                 if (ghostOldDir == Map::UP) {

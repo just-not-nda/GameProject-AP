@@ -4,7 +4,7 @@ bool first_load_map = true;
 int mapData[17][58];
 int bfsVisitMark[17][58];
 
-typedef pair<int, int> II;
+typedef pair<int, int> PR;
 
 Map::Map()
 {
@@ -55,8 +55,8 @@ pair<int, int> Map::getnextCrossID(int x, int y, int dir) {
     return nextCrossID[y][x][dir];
 }
 
-bool Map::isWall(pair<int, int> tileID) {
-    if (tileID == II(0, 7) || tileID == II(57, 7)) return false;
+bool Map::isWall(PR tileID) {
+    if (tileID == PR(0, 7) || tileID == PR(57, 7)) return false;
     if (tileID.second == 43) return false;
     if (tileID.first < 1 || tileID.first > 56) return true;
     if (tileID.second < 1 || tileID.second > 16) return true;
@@ -82,7 +82,7 @@ bool Map::canChangeDir(int x, int y, int newDir) {
     return validTurnDir[y][x][newDir];
 }
 
-bool Map::besideCrossIsWall(pair<int, int> Cross, int newDir) {
+bool Map::besideCrossIsWall(PR Cross, int newDir) {
     if (newDir == UP) Cross.second -= 1;
     else if (newDir == DOWN) Cross.second += 1;
     else if (newDir == RIGHT) Cross.first += 1;
@@ -107,45 +107,45 @@ void Map::findingCrossRoad() {
 
 void Map::NextCrossTileID() {
     for (int y = 0; y < MAP_HEIGHT; ++y) {
-        nextCrossID[y][0][LEFT] = II(-1, -1);
+        nextCrossID[y][0][LEFT] = PR(-1, -1);
         for (int x = 1; x < MAP_WIDTH; ++x) {
-            nextCrossID[y][x][LEFT] = II(-1, -1);
+            nextCrossID[y][x][LEFT] = PR(-1, -1);
 
-            if ( !isWall(pair<int, int> (x, y)) ) {
-                if (nextCrossID[y][x - 1][LEFT] != II(-1, -1)) nextCrossID[y][x][LEFT] = nextCrossID[y][x - 1][LEFT];
-                if (iscrossRoad(x - 1, y)) nextCrossID[y][x][LEFT] = II(x - 1, y);
+            if ( !isWall(PR (x, y)) ) {
+                if (nextCrossID[y][x - 1][LEFT] != PR(-1, -1)) nextCrossID[y][x][LEFT] = nextCrossID[y][x - 1][LEFT];
+                if (iscrossRoad(x - 1, y)) nextCrossID[y][x][LEFT] = PR(x - 1, y);
             }
         }
 
-        nextCrossID[y][MAP_WIDTH - 1][RIGHT] = II(-1, -1);
+        nextCrossID[y][MAP_WIDTH - 1][RIGHT] = PR(-1, -1);
         for (int x = MAP_WIDTH - 2; x >= 0; --x) {
-            nextCrossID[y][x][RIGHT] = II(-1, -1);
+            nextCrossID[y][x][RIGHT] = PR(-1, -1);
 
-            if ( !isWall(pair<int, int> (x, y)) ) {
-                if (nextCrossID[y][x + 1][RIGHT] != II(-1, -1)) nextCrossID[y][x][RIGHT] = nextCrossID[y][x + 1][RIGHT];
-                if (iscrossRoad(x + 1, y)) nextCrossID[y][x][RIGHT] = II(x + 1, y);
+            if ( !isWall(PR (x, y)) ) {
+                if (nextCrossID[y][x + 1][RIGHT] != PR(-1, -1)) nextCrossID[y][x][RIGHT] = nextCrossID[y][x + 1][RIGHT];
+                if (iscrossRoad(x + 1, y)) nextCrossID[y][x][RIGHT] = PR(x + 1, y);
             }
         }
     }
 
     for (int x = 0; x < MAP_WIDTH; ++x) {
-        nextCrossID[0][x][UP] = II(-1, -1);
+        nextCrossID[0][x][UP] = PR(-1, -1);
         for (int y = 1; y < MAP_HEIGHT; ++y) {
-            nextCrossID[y][x][UP] = II(-1, -1);
+            nextCrossID[y][x][UP] = PR(-1, -1);
 
-            if ( !isWall(pair<int, int> (x, y)) ) {
-                if (nextCrossID[y - 1][x][UP] != II(-1, -1)) nextCrossID[y][x][UP] = nextCrossID[y - 1][x][UP];
-                if (iscrossRoad(x, y - 1)) nextCrossID[y][x][UP] = II(x, y - 1);
+            if ( !isWall(PR (x, y)) ) {
+                if (nextCrossID[y - 1][x][UP] != PR(-1, -1)) nextCrossID[y][x][UP] = nextCrossID[y - 1][x][UP];
+                if (iscrossRoad(x, y - 1)) nextCrossID[y][x][UP] = PR(x, y - 1);
             }
         }
 
-        nextCrossID[MAP_HEIGHT - 1][x][DOWN] = II(-1, -1);
+        nextCrossID[MAP_HEIGHT - 1][x][DOWN] = PR(-1, -1);
         for (int y = MAP_HEIGHT - 2; y >= 0; --y) {
-            nextCrossID[y][x][DOWN] = II(-1, -1);
+            nextCrossID[y][x][DOWN] = PR(-1, -1);
 
-            if ( !isWall(pair<int, int> (x, y)) ) {
-                if (nextCrossID[y + 1][x][DOWN] != II(-1, -1)) nextCrossID[y][x][DOWN] = nextCrossID[y + 1][x][DOWN];
-                if (iscrossRoad(x, y + 1)) nextCrossID[y][x][DOWN] = II(x, y + 1);
+            if ( !isWall(PR (x, y)) ) {
+                if (nextCrossID[y + 1][x][DOWN] != PR(-1, -1)) nextCrossID[y][x][DOWN] = nextCrossID[y + 1][x][DOWN];
+                if (iscrossRoad(x, y + 1)) nextCrossID[y][x][DOWN] = PR(x, y + 1);
             }
         }
     }
@@ -161,40 +161,41 @@ void Map::calculateDistance() {
     int id = 0;
     int dh[4] = { 0, 1, 0, -1};
     int dc[4] = {-1, 0, 1,  0};
-    int dis[MAP_WIDTH * MAP_HEIGHT];
-    queue< pair<int, int> > visitNode;
+    int tempDist[MAP_WIDTH * MAP_HEIGHT];
+    queue< PR > bfsQueue;
     for (int x = 0; x < MAP_WIDTH; ++x) {
         for (int y = 0; y < MAP_HEIGHT; ++y) {
-            if (isWall(pair<int, int> (x, y))) continue;
-            if (y == 14 && (x == 0 || x == 27)) continue;
+            if (isWall(PR (x, y))) continue;
+            if (y == 8 && (x == 0 || x == 57)) continue;
 
             for (int startDir = 0; startDir < 4; ++ startDir) {
-                int xn = x + dh[startDir], yn = y + dc[startDir];
-                if (isWall(pair<int, int> (xn, yn))) continue;
-                for (int i = 0; i < MAP_HEIGHT * MAP_WIDTH; ++i) dis[i] = -1;
+                    int xn = x + dh[startDir];
+                    int yn = y + dc[startDir];
+                if (isWall(PR (xn, yn))) continue;
+                for (int i = 0; i < MAP_HEIGHT * MAP_WIDTH; ++i) tempDist[i] = -1;
                 ++id;
                 bfsVisitMark[yn][xn] = id;
-                dis[xn * MAP_HEIGHT + yn] = 0;
-                visitNode.push(pair<int, int> (yn * MAP_WIDTH + xn, startDir));
-                while (!visitNode.empty()) {
-                    int curx = visitNode.front().first % MAP_WIDTH,
-                        cury = visitNode.front().first / MAP_WIDTH,
-                        lasDir = visitNode.front().second;
-                    visitNode.pop();
-                    if (cury == 14 && (curx == 0 || curx == 27)) continue;
+                tempDist[xn * MAP_HEIGHT + yn] = 0;
+                bfsQueue.push(PR (yn * MAP_WIDTH + xn, startDir));
+                while (!bfsQueue.empty()) {
+                    int curx = bfsQueue.front().first % MAP_WIDTH,
+                        cury = bfsQueue.front().first / MAP_WIDTH,
+                        lasDir = bfsQueue.front().second;
+                    bfsQueue.pop();
+                    if (cury == 8 && (curx == 0 || curx == 57)) continue;
                     for (int dir = 0; dir < 4; ++dir) {
                         int u = curx + dh[dir], v = cury + dc[dir];
                         if (lasDir % 2 == dir % 2 && dir != lasDir) continue;
-                        if (isWall(std::pair<int, int> (u, v))) continue;
+                        if (isWall(PR (u, v))) continue;
                         if (bfsVisitMark[v][u] != id) {
                             bfsVisitMark[v][u] = id;
-                            dis[u * MAP_HEIGHT + v] = dis[curx * MAP_HEIGHT + cury] + 1;
-                            visitNode.push(std::pair<int, int> (v * MAP_WIDTH + u, dir));
+                            tempDist[u * MAP_HEIGHT + v] = tempDist[curx * MAP_HEIGHT + cury] + 1;
+                            bfsQueue.push(PR (v * MAP_WIDTH + u, dir));
                         }
                     }
                 }
                 for (int i = 0; i < MAP_WIDTH * MAP_HEIGHT; ++i)
-                    dist[xn * MAP_HEIGHT + yn][i][startDir] = dis[i];
+                    dist[xn * MAP_HEIGHT + yn][i][startDir] = tempDist[i];
             }
         }
     }
@@ -212,7 +213,7 @@ int Map::eatDots(const int &pacmanTileX, const int &pacmanTileY) {
     return 0;
 }
 
-int Map::getDist(pair<int, int> start, pair<int, int> end, int startDir) {
+int Map::getDist(PR start, PR end, int startDir) {
     if (isWall(end)) return (start.first - end.first) * (start.first - end.first) + (start.second - end.second) * (start.second - end.second);
     else {
         if (dist[start.first * MAP_HEIGHT + start.second][end.first * MAP_HEIGHT + end.second][startDir] == -1)
