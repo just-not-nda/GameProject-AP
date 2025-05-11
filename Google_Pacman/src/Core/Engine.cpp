@@ -248,7 +248,7 @@ void Engine::loop(bool &exitToMenu)
 
     pacmanTileX = pacman->getTileX();
     pacmanTileY = pacman->getTileY();
-    int type_of_dot = _map->eatCoins(pacmanTileX, pacmanTileY);
+    int type_of_dot = _map->eatDots(pacmanTileX, pacmanTileY);
 
     if (type_of_dot != GameManager::notDot) {
         gameManager->eatDots(type_of_dot);

@@ -1,11 +1,10 @@
 #include "Map.h"
-#include <queue>
 
 bool first_load_map = true;
 int mapData[17][58];
 int bfsVisitMark[17][58];
 
-typedef std::pair<int, int> II;
+typedef pair<int, int> II;
 
 Map::Map()
 {
@@ -201,7 +200,7 @@ void Map::calculateDistance() {
     }
 }
 
-int Map::eatCoins(const int &pacmanTileX, const int &pacmanTileY) {
+int Map::eatDots(const int &pacmanTileX, const int &pacmanTileY) {
     if (tile[pacmanTileY][pacmanTileX] == 30) {
         tile[pacmanTileY][pacmanTileX] = 31;
         return 30;

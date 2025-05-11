@@ -4,9 +4,8 @@
 #define MAP_H
 
 #include <fstream>
-#include <iostream>
 #include <algorithm>
-
+#include <queue>
 #include "GetError.h"
 using namespace std;
 
@@ -43,7 +42,7 @@ class Map
         bool iscrossRoad(int y, int x);
         bool canChangeDir(int x, int y, int newDir);
         bool besideCrossIsWall(pair<int, int> Cross, int newDir);
-        int eatCoins(const int &pacmanTileX, const int &pacmanTileY);
+        int eatDots(const int &pacmanTileX, const int &pacmanTileY);
         int getDist(pair<int, int> start, pair<int, int> end, int startDir);
         void reset();
 };
