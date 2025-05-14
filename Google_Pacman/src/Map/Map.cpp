@@ -178,13 +178,14 @@ void Map::calculateDistance() {
                 tempDist[xn * MAP_HEIGHT + yn] = 0;
                 bfsQueue.push(PR (yn * MAP_WIDTH + xn, startDir));
                 while (!bfsQueue.empty()) {
-                    int curx = bfsQueue.front().first % MAP_WIDTH,
-                        cury = bfsQueue.front().first / MAP_WIDTH,
-                        lasDir = bfsQueue.front().second;
+                    int curx = bfsQueue.front().first % MAP_WIDTH;
+                    int cury = bfsQueue.front().first / MAP_WIDTH;
+                    int lasDir = bfsQueue.front().second;
                     bfsQueue.pop();
                     if (cury == 8 && (curx == 0 || curx == 57)) continue;
                     for (int dir = 0; dir < 4; ++dir) {
-                        int u = curx + dh[dir], v = cury + dc[dir];
+                        int u = curx + dh[dir];
+                        int v = cury + dc[dir];
                         if (lasDir % 2 == dir % 2 && dir != lasDir) continue;
                         if (isWall(PR (u, v))) continue;
                         if (bfsVisitMark[v][u] != id) {
