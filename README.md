@@ -38,9 +38,3 @@ Bản đồ được chia thành một lưới gồm nhiều **tile vuông (gạ
 - C++
 - SDL2
 - App Piskel dùng để vẽ nhân vật, map, thành phần bằng pixel
-
-## 5. Ngưỡng điểm yêu cầu:
-### Em cho rằng mình đạt được mức điểm 8.5 vì những lý do sau đây:
-- Game có đồ họa
-- Game có sử dụng âm thanh, chữ, hình ảnh
-- Thuật toán game nâng cao
